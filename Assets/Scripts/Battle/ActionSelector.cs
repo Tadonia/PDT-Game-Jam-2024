@@ -39,9 +39,9 @@ public class ActionSelector : MonoBehaviour
         listWindow.anchoredPosition = Vector3.zero;
     }
 
-    public void OnButtonSubmit()
+    public void DoCommand(SkillCommandEnum command)
     {
-        playerCommander.OnTurnEnd();
+        playerCommander.DoCommand(command);
     }
 
     public void AttackButton()

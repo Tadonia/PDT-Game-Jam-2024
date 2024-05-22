@@ -5,34 +5,35 @@ using TMPro;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class ActionListButton : MonoBehaviour, ISelectHandler, ISubmitHandler, IPointerClickHandler
+public class ActionListButton : MonoBehaviour, ISelectHandler, ISubmitHandler, IPointerDownHandler
 {
     [SerializeField] TMP_Text buttonText;
     [SerializeField] Button button;
     [SerializeField] Image iconImage;
 
     ActionList actionList;
+    SkillCommandEnum skillCommand;
 
     public void OnSelect(BaseEventData eventData)
     {
         actionList.ScrollTo(this);
-        Debug.Log("Selected");
     }
 
     public void OnSubmit(BaseEventData eventData)
     {
-        actionList.OnButtonSubmit();
+        actionList.DoCommand(skillCommand);
     }
 
-    public void OnPointerClick(PointerEventData eventData)
+    public void OnPointerDown(PointerEventData eventData)
     {
-        actionList.OnButtonSubmit();
+        actionList.DoCommand(skillCommand);
     }
 
-    public void SetAction(string text, Sprite icon, ActionList list)
+    public void SetAction(string text, Sprite icon, ActionList list, SkillCommandEnum command)
     {
         buttonText.text = text;
         actionList = list;
+        skillCommand = command;
     }
 
     public float GetButtonHeight()

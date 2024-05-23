@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actionName: Torchlight
   icon: {fileID: 0}
+  command: 4

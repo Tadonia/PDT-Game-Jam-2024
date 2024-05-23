@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actionName: Flame Blast
   icon: {fileID: 0}
+  command: 2

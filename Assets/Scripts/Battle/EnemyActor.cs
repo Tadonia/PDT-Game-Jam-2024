@@ -8,9 +8,18 @@ public class EnemyActor : BattleActor
 
     Vector3 startPos;
 
-    public void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         startPos = spriteTransform.position;
+    }
+
+    protected override void OnBattleStart()
+    {
+        base.OnBattleStart();
+
+        // TODO: REMOVE
+        SetStats(actorStats, actorStats.vitality * 5f + 25f, actorStats.spirit * 5f);
     }
 
     public override void OnTurnEnd()

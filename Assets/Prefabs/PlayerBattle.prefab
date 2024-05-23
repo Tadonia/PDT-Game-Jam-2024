@@ -131,10 +131,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   actorStats:
+    vitality: 5
     strength: 5
+    spirit: 5
     speed: 5
     defence: 5
     resistance: 5
+  allegiance: 0
+  statsBarPrefab: {fileID: 5967871131720504777, guid: caedb4f398faaf2479abb752d2d358fb, type: 3}
   debugMessages: 1
   actionSelector: {fileID: 6442898783822393345}
 --- !u!1001 &6244133484876469613

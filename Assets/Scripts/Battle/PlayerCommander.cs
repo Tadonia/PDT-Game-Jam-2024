@@ -11,8 +11,9 @@ public class PlayerCommander : BattleActor
 
     Dictionary<SkillCommandEnum, Action> commandDictionary;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         commandDictionary = new Dictionary<SkillCommandEnum, Action>
         {
             { SkillCommandEnum.Ember, () => Ember() },
@@ -21,6 +22,14 @@ public class PlayerCommander : BattleActor
             { SkillCommandEnum.HeatWave, () => HeatWave() },
             { SkillCommandEnum.Torchlight, () => Torchlight() },
         };
+    }
+
+    protected override void OnBattleStart()
+    {
+        base.OnBattleStart();
+
+        // TODO: REMOVE
+        SetStats(actorStats, actorStats.vitality * 5f + 25f, actorStats.spirit * 5f);
     }
 
     public override void OnTurnStart()

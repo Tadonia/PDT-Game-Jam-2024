@@ -5,7 +5,7 @@ using UnityEngine;
 
 public abstract class BattleActor : MonoBehaviour, IComparable<BattleActor>
 {
-    [Header("Base BattleActor Variables")]
+    [Header("Base Battle Actor Variables")]
     public ActorStats actorStats;
     public ActorAllegiance allegiance;
     public GameObject statsBarPrefab;

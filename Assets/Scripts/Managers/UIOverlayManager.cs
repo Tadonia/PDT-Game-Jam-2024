@@ -27,7 +27,7 @@ public class UIOverlayManager : MonoBehaviour
 
     public void SetUIElementPosition(Transform UITransform, Vector3 worldPosition)
     {
-        UITransform.position = Camera.main.WorldToScreenPoint(worldPosition);
+        UITransform.position = UIOverlayCamera.WorldToScreenPoint(worldPosition);
         //UITransform.rotation = UIOverlayCamera.transform.rotation;
     }
 }

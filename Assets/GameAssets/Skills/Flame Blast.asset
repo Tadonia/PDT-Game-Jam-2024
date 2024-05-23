@@ -14,4 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actionName: Flame Blast
   icon: {fileID: 0}
-  command: 2
+  command: 3
+  attackMinigame: {fileID: 838055235752293614, guid: 86c49fa680984f9469bd101164ed19a1, type: 3}

@@ -13,6 +13,7 @@ public class ActionListButton : MonoBehaviour, ISelectHandler, ISubmitHandler, I
 
     ActionList actionList;
     SkillCommandEnum skillCommand;
+    GameObject playerMinigame;
 
     public void OnSelect(BaseEventData eventData)
     {
@@ -21,19 +22,20 @@ public class ActionListButton : MonoBehaviour, ISelectHandler, ISubmitHandler, I
 
     public void OnSubmit(BaseEventData eventData)
     {
-        actionList.DoCommand(skillCommand);
+        actionList.DoCommand(skillCommand, playerMinigame, this);
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        actionList.DoCommand(skillCommand);
+        actionList.DoCommand(skillCommand, playerMinigame, this);
     }
 
-    public void SetAction(string text, Sprite icon, ActionList list, SkillCommandEnum command)
+    public void SetAction(string text, Sprite icon, ActionList list, SkillCommandEnum command, GameObject minigame)
     {
         buttonText.text = text;
         actionList = list;
         skillCommand = command;
+        playerMinigame = minigame;
     }
 
     public float GetButtonHeight()

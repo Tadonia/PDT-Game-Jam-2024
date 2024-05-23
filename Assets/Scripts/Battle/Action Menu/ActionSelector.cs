@@ -1,7 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
+using UnityEngine.EventSystems;
 
 public class ActionSelector : MonoBehaviour
 {
@@ -16,7 +19,8 @@ public class ActionSelector : MonoBehaviour
     [SerializeField] ActionObject[] itemActions;
 
     [Header("Others")]
-    [SerializeField] RectTransform cursor;
+    [SerializeField] RectTransform listCursor;
+    [SerializeField] RectTransform enemyCursor;
     [SerializeField] RectTransform listWindow;
     [SerializeField] float listWindowRevealTime;
     [SerializeField] Vector3 listWindowTargetPostion;
@@ -27,21 +31,108 @@ public class ActionSelector : MonoBehaviour
     bool skillsSelected;
     bool itemsSelected;
 
+    bool selectingEnemies;
+    BattleActor[] enemyTargets;
+    int selectedTarget;
+    SkillCommandEnum currentCommand;
+    GameObject currentMinigame;
+    ActionListButton lastSelectedButton;
+
     private void Awake()
     {
         actionList = listWindow.GetComponent<ActionList>();
     }
+
+    private void Start()
+    {
+        listCursor.gameObject.SetActive(false);
+        enemyCursor.gameObject.SetActive(false);
+    }
+
+    #region inputs
+    public void NavigateInput(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            OnNavigateInput((int)context.ReadValue<Vector2>().y);
+        }
+    }
+
+    public void SubmitInput(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            OnSubmitInput();
+        }
+    }
+
+    public void CancelInput(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            OnCancelInput();
+        }
+    }
+
+    private void OnNavigateInput(int input)
+    {
+        if (selectingEnemies)
+        {
+            selectedTarget += input;
+            if (selectedTarget > enemyTargets.Length - 1)
+                selectedTarget = 0;
+            else if (selectedTarget < 0)
+                selectedTarget = enemyTargets.Length - 1;
+            UIOverlayManager.Instance.SetUIElementPosition(enemyCursor, enemyTargets[selectedTarget].transform.position + Vector3.up * 2.5f);
+        }
+    }
+
+    private void OnSubmitInput()
+    {
+        if (selectingEnemies)
+        {
+            selectingEnemies = false;
+            BattleActor[] targets = new BattleActor[1] { enemyTargets[selectedTarget] };
+            playerCommander.DoCommand(currentCommand, currentMinigame, targets);
+        }
+    }
+
+    private void OnCancelInput()
+    {
+        if (selectingEnemies)
+        {
+            selectingEnemies = false;
+            EventSystem.current.SetSelectedGameObject(lastSelectedButton.gameObject);
+            lastSelectedButton.OnSelect(new BaseEventData(EventSystem.current));
+            enemyCursor.gameObject.SetActive(false);
+            currentCommand = SkillCommandEnum.None;
+            currentMinigame = null;
+        }
+    }
+    #endregion
 
     public void OnTurnStart(PlayerCommander playerCommander)
     {
         this.playerCommander = playerCommander;
         isListRevealed = false;
         listWindow.anchoredPosition = Vector3.zero;
+        enemyCursor.gameObject.SetActive(false);
+
+        BattleActor[] actors = FindObjectsOfType<BattleActor>();
+        enemyTargets = (from a in actors orderby a.transform.position.y descending where a.allegiance is ActorAllegiance.Enemy select a).ToArray<BattleActor>();
+        Debug.Log("Targets: " + enemyTargets.Length);
     }
 
-    public void DoCommand(SkillCommandEnum command)
+    public void DoCommand(SkillCommandEnum command, GameObject minigame, ActionListButton selectedButton)
     {
-        playerCommander.DoCommand(command);
+        selectingEnemies = true;
+        currentCommand = command;
+        currentMinigame = minigame;
+        lastSelectedButton = selectedButton;
+        EventSystem.current.SetSelectedGameObject(null);
+        selectedTarget = 0;
+        enemyCursor.gameObject.SetActive(true);
+        UIOverlayManager.Instance.SetUIElementPosition(enemyCursor, enemyTargets[selectedTarget].transform.position + Vector3.up * 2.5f);
     }
 
     public void AttackButton()
@@ -95,6 +186,7 @@ public class ActionSelector : MonoBehaviour
     public void HideList()
     {
         isListRevealed = false;
+        enemyCursor.gameObject.SetActive(false);
         if (moveListWindowCoroutine != null)
         {
             StopCoroutine(moveListWindowCoroutine);

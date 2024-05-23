@@ -5,22 +5,23 @@ using UnityEngine;
 
 public class PlayerCommander : BattleActor
 {
+    [Header("Player Commander Variables")]
     [SerializeField] ActionSelector actionSelector;
 
     public static PlayerCommander Instance { get; private set; }
 
-    Dictionary<SkillCommandEnum, Action> commandDictionary;
+    Dictionary<SkillCommandEnum, Action<BattleActor[]>> commandDictionary;
 
     protected override void Awake()
     {
         base.Awake();
-        commandDictionary = new Dictionary<SkillCommandEnum, Action>
+        commandDictionary = new Dictionary<SkillCommandEnum, Action<BattleActor[]>>
         {
-            { SkillCommandEnum.Ember, () => Ember() },
-            { SkillCommandEnum.FireSpear, () => FireSpear() },
-            { SkillCommandEnum.FlameBurst, () => FlameBurst() },
-            { SkillCommandEnum.HeatWave, () => HeatWave() },
-            { SkillCommandEnum.Torchlight, () => Torchlight() },
+            { SkillCommandEnum.Ember, (BattleActor[] targets) => Ember(targets) },
+            { SkillCommandEnum.FireSpear, (BattleActor[] targets) => FireSpear(targets) },
+            { SkillCommandEnum.FlameBurst, (BattleActor[] targets) => FlameBurst(targets) },
+            { SkillCommandEnum.HeatWave, (BattleActor[] targets) => HeatWave(targets) },
+            { SkillCommandEnum.Torchlight, (BattleActor[] targets) => Torchlight(targets) },
         };
     }
 
@@ -45,36 +46,38 @@ public class PlayerCommander : BattleActor
         actionSelector.gameObject.SetActive(false);
     }
 
-    public void DoCommand(SkillCommandEnum skillCommand)
+    public void DoCommand(SkillCommandEnum skillCommand, GameObject minigame, BattleActor[] targets)
     {
-        commandDictionary[skillCommand].Invoke();
+        actionSelector.gameObject.SetActive(false);
+        Instantiate(minigame).GetComponent<IPlayerMinigame>().StartMinigame(this, targets);
+        //commandDictionary[skillCommand].Invoke(targets);
     }
 
-    private void Ember()
+    private void Ember(BattleActor[] targets)
     {
         Debug.Log("Ember");
         OnTurnEnd();
     }
 
-    private void FireSpear()
+    private void FireSpear(BattleActor[] targets)
     {
         Debug.Log("Fire Spear");
         OnTurnEnd();
     }
 
-    private void FlameBurst()
+    private void FlameBurst(BattleActor[] targets)
     {
         Debug.Log("Flame Burst");
         OnTurnEnd();
     }
 
-    private void HeatWave()
+    private void HeatWave(BattleActor[] targets)
     {
         Debug.Log("Heat Wave");
         OnTurnEnd();
     }
 
-    private void Torchlight()
+    private void Torchlight(BattleActor[] targets)
     {
         Debug.Log("Torchlight");
         OnTurnEnd();
@@ -83,6 +86,7 @@ public class PlayerCommander : BattleActor
 
 public enum SkillCommandEnum
 {
+    None,
     Ember,
     FireSpear,
     FlameBurst,

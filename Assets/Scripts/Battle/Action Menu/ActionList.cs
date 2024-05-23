@@ -20,7 +20,7 @@ public class ActionList : MonoBehaviour
             GameObject button = Instantiate(listButton, contextTransform);
             button.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, -120 * i, 0);
             ActionListButton actionListButton = button.GetComponentInChildren<ActionListButton>();
-            actionListButton.SetAction(actions[i].actionName, actions[i].icon, this, actions[i].command);
+            actionListButton.SetAction(actions[i].actionName, actions[i].icon, this, actions[i].command, actions[i].attackMinigame);
             listButtons.Add(button);
         }
 
@@ -38,9 +38,9 @@ public class ActionList : MonoBehaviour
         listButtons.Clear();
     }
 
-    public void DoCommand(SkillCommandEnum command)
+    public void DoCommand(SkillCommandEnum command, GameObject minigame, ActionListButton selectedButton)
     {
-        actionSelector.DoCommand(command);
+        actionSelector.DoCommand(command, minigame, selectedButton);
     }
 
     public void ScrollTo(ActionListButton actionListButton)

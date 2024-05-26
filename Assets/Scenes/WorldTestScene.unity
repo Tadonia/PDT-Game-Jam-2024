@@ -1426,9 +1426,10 @@ MonoBehaviour:
   sprite: {fileID: 832182172}
   detectionRange: 5
   chaseRange: 7
-  chaseSpeed: 0
-  stoppingRange: 0
   targetUpdateRate: 2
+  minEnemies: 1
+  maxEnemies: 1
+  enemyPool: []
   followTarget: {fileID: 441708387}
 --- !u!4 &304876429
 Transform:

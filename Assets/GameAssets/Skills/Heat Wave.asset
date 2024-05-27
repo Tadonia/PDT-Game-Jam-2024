@@ -15,4 +15,4 @@ MonoBehaviour:
   actionName: Heat Wave
   icon: {fileID: 0}
   command: 4
-  attackMinigame: {fileID: 838055235752293614, guid: 86c49fa680984f9469bd101164ed19a1, type: 3}
+  attackMinigame: {fileID: 6337995497600330490, guid: 86c49fa680984f9469bd101164ed19a1, type: 3}

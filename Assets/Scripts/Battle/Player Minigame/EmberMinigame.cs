@@ -12,10 +12,11 @@ public class EmberMinigame : MonoBehaviour, IPlayerMinigame
     [SerializeField] ParticleSystem ps;
 
     int counter = 0;
+    bool activated = false;
 
     private void Update()
     {
-        if (EventSystem.current.currentInputModule.input.GetButtonDown("Submit"))
+        if (activated && EventSystem.current.currentInputModule.input.GetButtonDown("Submit"))
         {
             counter++;
             counterText.text = counter.ToString();
@@ -25,6 +26,8 @@ public class EmberMinigame : MonoBehaviour, IPlayerMinigame
 
     public void StartMinigame(PlayerCommander player, BattleActor[] targets)
     {
+        activated = true;
+        ps.transform.position = player.transform.position + Vector3.up;
         StartCoroutine(Minigame(player, targets));
     }
 

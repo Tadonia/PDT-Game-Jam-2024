@@ -54,7 +54,7 @@ public class ActionSelector : MonoBehaviour
     {
         if (context.performed)
         {
-            OnNavigateInput((int)context.ReadValue<Vector2>().y);
+            OnNavigateInput(context.ReadValue<Vector2>());
         }
     }
 
@@ -74,16 +74,20 @@ public class ActionSelector : MonoBehaviour
         }
     }
 
-    private void OnNavigateInput(int input)
+    private void OnNavigateInput(Vector2 input)
     {
         if (selectingEnemies)
         {
-            selectedTarget += input;
+            selectedTarget += (int)input.y;
             if (selectedTarget > enemyTargets.Length - 1)
                 selectedTarget = 0;
             else if (selectedTarget < 0)
                 selectedTarget = enemyTargets.Length - 1;
             UIOverlayManager.Instance.SetUIElementPosition(enemyCursor, enemyTargets[selectedTarget].transform.position + Vector3.up * 2.5f);
+        }
+        else if (isListRevealed && input.x < 0)
+        {
+            HideList();
         }
     }
 
@@ -185,6 +189,18 @@ public class ActionSelector : MonoBehaviour
 
     public void HideList()
     {
+        if (skillsSelected)
+        {
+            EventSystem.current.SetSelectedGameObject(skillsButton.gameObject);
+        }
+        else if (itemsSelected)
+        {
+            EventSystem.current.SetSelectedGameObject(itemsButton.gameObject);
+        }
+        skillsSelected = false;
+        itemsSelected = false;
+        selectingEnemies = false;
+
         isListRevealed = false;
         enemyCursor.gameObject.SetActive(false);
         if (moveListWindowCoroutine != null)

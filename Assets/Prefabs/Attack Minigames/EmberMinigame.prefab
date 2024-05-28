@@ -5151,6 +5151,7 @@ MonoBehaviour:
   counterText: {fileID: 6261063486236680881}
   timerText: {fileID: 8460057490542547388}
   ps: {fileID: 8588512423081779690}
+  minigameDuration: 3
 --- !u!1 &7288564461462962166
 GameObject:
   m_ObjectHideFlags: 0

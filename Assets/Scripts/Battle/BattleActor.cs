@@ -33,14 +33,13 @@ public abstract class BattleActor : MonoBehaviour, IComparable<BattleActor>
     {
         if (battleStarted)
         {
-            UIOverlayManager.Instance.SetUIElementPosition(statsBar.transform, transform.position);
+            UIOverlayManager.Instance.SetUIElementPosition(statsBar.transform, transform.position + new Vector3(0f, 2.17f, 0.33f));
         }
     }
 
     protected virtual void OnBattleStart()
     {
         statsBar = Instantiate(statsBarPrefab, UIOverlayManager.Instance.GetCanvas().transform).GetComponent<UIStatsBar>();
-        UIOverlayManager.Instance.SetUIElementPosition(statsBar.transform, transform.position + Vector3.back);
         battleStarted = true;
     }
 

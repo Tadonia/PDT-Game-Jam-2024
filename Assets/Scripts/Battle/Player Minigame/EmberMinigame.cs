@@ -10,6 +10,7 @@ public class EmberMinigame : MonoBehaviour, IPlayerMinigame
     [SerializeField] TMP_Text counterText;
     [SerializeField] TMP_Text timerText;
     [SerializeField] ParticleSystem ps;
+    [SerializeField] float minigameDuration;
 
     int counter = 0;
     bool activated = false;
@@ -20,7 +21,7 @@ public class EmberMinigame : MonoBehaviour, IPlayerMinigame
         {
             counter++;
             counterText.text = counter.ToString();
-            ps.Emit(10);
+            ps.Emit(5);
         }
     }
 
@@ -33,7 +34,7 @@ public class EmberMinigame : MonoBehaviour, IPlayerMinigame
 
     IEnumerator Minigame(PlayerCommander player, BattleActor[] targets)
     {
-        float timer = 5f;
+        float timer = minigameDuration;
         while (timer > 0)
         {
             timerText.text = timer.ToString("F");

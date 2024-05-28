@@ -5,6 +5,9 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField, Tooltip("Affects whether input can move the player or not. Player can still be moved by other means.")] 
+    bool inputMovement = true;
+
     [Header("World Movement")]
     [SerializeField] float maxSpeed = 7.0f;
     [SerializeField] float acceleration = 21.0f;
@@ -21,7 +24,7 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        ChangeVelocity();
+        InputVelocity();
         MoveCharacter();
     }
 
@@ -35,10 +38,20 @@ public class PlayerController : MonoBehaviour
     }
     #endregion
 
-    private void ChangeVelocity()
+    private void InputVelocity()
     {
         velocity.x = AccelerateValue(moveInput.x, velocity.x, maxSpeed);
         velocity.z = AccelerateValue(moveInput.y, velocity.z, maxSpeed);
+    }
+
+    public Vector3 GetVelocity()
+    {
+        return velocity;
+    }
+
+    public void SetVelocity(Vector3 newVelocity)
+    {
+        velocity = newVelocity;
     }
 
     private float AccelerateValue(float input, float speed, float maxSpeed)
@@ -91,5 +104,10 @@ public class PlayerController : MonoBehaviour
             moveVelocity = moveVelocity.normalized * maxSpeed;
         }
         cc.Move(new Vector3(moveVelocity.x, velocity.y, moveVelocity.y) * Time.fixedDeltaTime);
+    }
+
+    public void SetPosition(Vector3 newPosition)
+    {
+        transform.position = newPosition;
     }
 }

@@ -13,7 +13,7 @@ public class ActionListButton : MonoBehaviour, ISelectHandler, ISubmitHandler, I
 
     ActionList actionList;
     SkillCommandEnum skillCommand;
-    GameObject playerMinigame;
+    ActionObject playerMinigame;
 
     public void OnSelect(BaseEventData eventData)
     {
@@ -30,7 +30,7 @@ public class ActionListButton : MonoBehaviour, ISelectHandler, ISubmitHandler, I
         actionList.DoCommand(skillCommand, playerMinigame, this);
     }
 
-    public void SetAction(string text, Sprite icon, ActionList list, SkillCommandEnum command, GameObject minigame)
+    public void SetAction(string text, Sprite icon, ActionList list, SkillCommandEnum command, ActionObject minigame)
     {
         buttonText.text = text;
         actionList = list;

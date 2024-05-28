@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnemyActor : BattleActor
 {
     [SerializeField] Transform spriteTransform;
+    [SerializeField] EnemyActionObject action;
 
     Vector3 startPos;
 
@@ -30,7 +31,20 @@ public class EnemyActor : BattleActor
     public override void OnTurnStart()
     {
         base.OnTurnStart();
-        StartCoroutine(Jump());
+        if (action == null)
+        {
+            StartCoroutine(Jump());
+        }
+        else
+        {
+            PerformAction();
+        }
+    }
+
+    private void PerformAction()
+    {
+        PlayerCommander player = PlayerCommander.Instance;
+        action.StartMinigame(this, new BattleActor[1] { player });
     }
 
     IEnumerator Jump()

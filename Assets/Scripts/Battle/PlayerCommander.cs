@@ -15,6 +15,12 @@ public class PlayerCommander : BattleActor
     protected override void Awake()
     {
         base.Awake();
+        if (Instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
         commandDictionary = new Dictionary<SkillCommandEnum, Action<BattleActor[]>>
         {
             { SkillCommandEnum.Ember, (BattleActor[] targets) => Ember(targets) },
@@ -46,10 +52,10 @@ public class PlayerCommander : BattleActor
         actionSelector.gameObject.SetActive(false);
     }
 
-    public void DoCommand(SkillCommandEnum skillCommand, GameObject minigame, BattleActor[] targets)
+    public void DoCommand(SkillCommandEnum skillCommand, ActionObject minigame, BattleActor[] targets)
     {
         actionSelector.gameObject.SetActive(false);
-        Instantiate(minigame).GetComponent<IPlayerMinigame>().StartMinigame(this, targets);
+        minigame.StartMinigame(this, targets);
         //commandDictionary[skillCommand].Invoke(targets);
     }
 

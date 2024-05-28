@@ -9,10 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 36a020ac59ddc7d4c9baf582f484cfa8, type: 3}
-  m_Name: Potion
+  m_Script: {fileID: 11500000, guid: 7de311b1c723bbe42b96e5e59deddcb1, type: 3}
+  m_Name: MissilesMinigame
   m_EditorClassIdentifier: 
-  actionName: Potion
+  actionName: Missiles
   icon: {fileID: 0}
-  command: 0
-  attackMinigame: {fileID: 6337995497600330490, guid: 86c49fa680984f9469bd101164ed19a1, type: 3}
+  enemyMinigame: {fileID: 4385301787244303363, guid: 03e785e46d6856b4da03f0d968071c73, type: 3}

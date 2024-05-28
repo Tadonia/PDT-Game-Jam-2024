@@ -35,7 +35,7 @@ public class ActionSelector : MonoBehaviour
     BattleActor[] enemyTargets;
     int selectedTarget;
     SkillCommandEnum currentCommand;
-    GameObject currentMinigame;
+    ActionObject currentMinigame;
     ActionListButton lastSelectedButton;
 
     private void Awake()
@@ -127,7 +127,7 @@ public class ActionSelector : MonoBehaviour
         Debug.Log("Targets: " + enemyTargets.Length);
     }
 
-    public void DoCommand(SkillCommandEnum command, GameObject minigame, ActionListButton selectedButton)
+    public void DoCommand(SkillCommandEnum command, ActionObject minigame, ActionListButton selectedButton)
     {
         selectingEnemies = true;
         currentCommand = command;

@@ -33,7 +33,7 @@ public class ActionList : MonoBehaviour
             }
 
             ActionListButton actionListButton = buttonObject.GetComponentInChildren<ActionListButton>();
-            actionListButton.SetAction(actions[i].actionName, actions[i].icon, this, actions[i].command, actions[i].attackMinigame);
+            actionListButton.SetAction(actions[i].actionName, actions[i].icon, this, actions[i].command, actions[i]);
             listButtons.Add(button);
         }
 
@@ -66,7 +66,7 @@ public class ActionList : MonoBehaviour
         listButtons.Clear();
     }
 
-    public void DoCommand(SkillCommandEnum command, GameObject minigame, ActionListButton selectedButton)
+    public void DoCommand(SkillCommandEnum command, ActionObject minigame, ActionListButton selectedButton)
     {
         actionSelector.DoCommand(command, minigame, selectedButton);
     }

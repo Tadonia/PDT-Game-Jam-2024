@@ -41,10 +41,15 @@ public class EmberMinigame : MonoBehaviour, IPlayerMinigame
             yield return null;
         }
         float damage = player.actorStats.strength / 10f * counter;
+        ParticleSystem.EmissionModule emission = ps.emission;
+        emission.rateOverTime = 0;
         foreach (BattleActor target in targets)
         {
+            ps.transform.position = target.transform.position + Vector3.up;
+            ps.Emit(25);
             target.DamageHealth(damage);
         }
+        yield return new WaitForSeconds(1);
         player.OnTurnEnd();
         Destroy(gameObject);
     }

@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actionName: Ember
   icon: {fileID: 0}
-  command: 1
   attackMinigame: {fileID: 6337995497600330490, guid: 86c49fa680984f9469bd101164ed19a1, type: 3}
+  minigameObject: {fileID: 0}

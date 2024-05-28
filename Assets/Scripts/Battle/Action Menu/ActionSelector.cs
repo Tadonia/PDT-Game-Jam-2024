@@ -34,7 +34,6 @@ public class ActionSelector : MonoBehaviour
     bool selectingEnemies;
     BattleActor[] enemyTargets;
     int selectedTarget;
-    SkillCommandEnum currentCommand;
     ActionObject currentMinigame;
     ActionListButton lastSelectedButton;
 
@@ -97,7 +96,7 @@ public class ActionSelector : MonoBehaviour
         {
             selectingEnemies = false;
             BattleActor[] targets = new BattleActor[1] { enemyTargets[selectedTarget] };
-            playerCommander.DoCommand(currentCommand, currentMinigame, targets);
+            playerCommander.DoCommand(currentMinigame, targets);
         }
     }
 
@@ -109,7 +108,6 @@ public class ActionSelector : MonoBehaviour
             EventSystem.current.SetSelectedGameObject(lastSelectedButton.gameObject);
             lastSelectedButton.OnSelect(new BaseEventData(EventSystem.current));
             enemyCursor.gameObject.SetActive(false);
-            currentCommand = SkillCommandEnum.None;
             currentMinigame = null;
         }
     }
@@ -127,10 +125,9 @@ public class ActionSelector : MonoBehaviour
         Debug.Log("Targets: " + enemyTargets.Length);
     }
 
-    public void DoCommand(SkillCommandEnum command, ActionObject minigame, ActionListButton selectedButton)
+    public void DoCommand(ActionObject minigame, ActionListButton selectedButton)
     {
         selectingEnemies = true;
-        currentCommand = command;
         currentMinigame = minigame;
         lastSelectedButton = selectedButton;
         EventSystem.current.SetSelectedGameObject(null);

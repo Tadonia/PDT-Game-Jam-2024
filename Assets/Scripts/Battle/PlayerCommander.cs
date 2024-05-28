@@ -14,7 +14,6 @@ public class PlayerCommander : BattleActor
 
     public static PlayerCommander Instance { get; private set; }
 
-    Dictionary<SkillCommandEnum, Action<BattleActor[]>> commandDictionary;
     Vector3 startPos;
 
     protected override void Awake()
@@ -26,14 +25,6 @@ public class PlayerCommander : BattleActor
             return;
         }
         Instance = this;
-        commandDictionary = new Dictionary<SkillCommandEnum, Action<BattleActor[]>>
-        {
-            { SkillCommandEnum.Ember, (BattleActor[] targets) => Ember(targets) },
-            { SkillCommandEnum.FireSpear, (BattleActor[] targets) => FireSpear(targets) },
-            { SkillCommandEnum.FlameBurst, (BattleActor[] targets) => FlameBurst(targets) },
-            { SkillCommandEnum.HeatWave, (BattleActor[] targets) => HeatWave(targets) },
-            { SkillCommandEnum.Torchlight, (BattleActor[] targets) => Torchlight(targets) },
-        };
         playerController.enabled = false;
         startPos = transform.position;
     }
@@ -59,7 +50,7 @@ public class PlayerCommander : BattleActor
         actionSelector.gameObject.SetActive(false);
     }
 
-    public void DoCommand(SkillCommandEnum skillCommand, ActionObject minigame, BattleActor[] targets)
+    public void DoCommand(ActionObject minigame, BattleActor[] targets)
     {
         actionSelector.gameObject.SetActive(false);
         minigame.StartMinigame(this, targets);
@@ -98,44 +89,4 @@ public class PlayerCommander : BattleActor
         }
         goBackCoroutine = null;
     }
-
-    private void Ember(BattleActor[] targets)
-    {
-        Debug.Log("Ember");
-        OnTurnEnd();
-    }
-
-    private void FireSpear(BattleActor[] targets)
-    {
-        Debug.Log("Fire Spear");
-        OnTurnEnd();
-    }
-
-    private void FlameBurst(BattleActor[] targets)
-    {
-        Debug.Log("Flame Burst");
-        OnTurnEnd();
-    }
-
-    private void HeatWave(BattleActor[] targets)
-    {
-        Debug.Log("Heat Wave");
-        OnTurnEnd();
-    }
-
-    private void Torchlight(BattleActor[] targets)
-    {
-        Debug.Log("Torchlight");
-        OnTurnEnd();
-    }
-}
-
-public enum SkillCommandEnum
-{
-    None,
-    Ember,
-    FireSpear,
-    FlameBurst,
-    HeatWave,
-    Torchlight
 }

@@ -7,7 +7,6 @@ public class ActionObject : ScriptableObject
 {
     public string actionName;
     public Sprite icon;
-    public SkillCommandEnum command;
     public GameObject attackMinigame;
 
     [HideInInspector] public GameObject minigameObject;

@@ -40,7 +40,7 @@ public abstract class BattleActor : MonoBehaviour, IComparable<BattleActor>
     protected virtual void OnBattleStart()
     {
         statsBar = Instantiate(statsBarPrefab, UIOverlayManager.Instance.GetCanvas().transform).GetComponent<UIStatsBar>();
-        UIOverlayManager.Instance.SetUIElementPosition(statsBar.transform, transform.position);
+        UIOverlayManager.Instance.SetUIElementPosition(statsBar.transform, transform.position + Vector3.back);
         battleStarted = true;
     }
 

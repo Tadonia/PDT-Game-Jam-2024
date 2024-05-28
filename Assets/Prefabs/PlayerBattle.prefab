@@ -60,7 +60,19 @@ MonoBehaviour:
       m_Calls: []
   m_ActionEvents:
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4330291573724683251}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: MoveInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: ba649e17-685f-4705-92e6-a472a2d16441
     m_ActionName: Player/Move[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
   - m_PersistentCalls:
@@ -291,7 +303,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1956847772639967105}
   - component: {fileID: 4985120398087350745}
-  m_Layer: 0
+  - component: {fileID: 4330291573724683251}
+  - component: {fileID: 5399324523461915789}
+  m_Layer: 7
   m_Name: PlayerBattle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -339,6 +353,49 @@ MonoBehaviour:
   statsBarPrefab: {fileID: 5967871131720504777, guid: caedb4f398faaf2479abb752d2d358fb, type: 3}
   debugMessages: 1
   actionSelector: {fileID: 6442898783822393345}
+  playerController: {fileID: 4330291573724683251}
+  characterController: {fileID: 5399324523461915789}
+  playerInput: {fileID: 5248959630469605706}
+--- !u!114 &4330291573724683251
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6570226645684996146}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70ecb096603ac90429cc18d52efd3d5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxSpeed: 7
+  acceleration: 28
+--- !u!143 &5399324523461915789
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6570226645684996146}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Height: 2
+  m_Radius: 0.5
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1001 &6244133484876469613
 PrefabInstance:
   m_ObjectHideFlags: 0

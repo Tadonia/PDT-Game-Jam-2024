@@ -48,6 +48,7 @@ public class EmberMinigame : MonoBehaviour, IPlayerMinigame
             ps.transform.position = target.transform.position + Vector3.up;
             ps.Emit(25);
             target.DamageHealth(damage);
+            BattleElementManager.Instance.AddDamageText(damage, target.transform.position + Vector3.up);
         }
         yield return new WaitForSeconds(1);
         player.OnTurnEnd();

@@ -14,6 +14,7 @@ public class MissileMinigame : MonoBehaviour, IEnemyMinigame
 
     public void StartMinigame(EnemyActor enemy, BattleActor[] targets)
     {
+        (targets[0] as PlayerCommander).SetMovement(true);
         StartCoroutine(Minigame(enemy, targets));
     }
 
@@ -38,6 +39,7 @@ public class MissileMinigame : MonoBehaviour, IEnemyMinigame
             yield return null;
         }
         yield return new WaitForSeconds(1);
+        (targets[0] as PlayerCommander).SetMovement(false);
         enemy.OnTurnEnd();
         Destroy(gameObject);
     }

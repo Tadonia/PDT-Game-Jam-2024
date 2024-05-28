@@ -2,15 +2,20 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerCommander : BattleActor
 {
     [Header("Player Commander Variables")]
     [SerializeField] ActionSelector actionSelector;
+    [SerializeField] PlayerController playerController;
+    [SerializeField] CharacterController characterController;
+    [SerializeField] PlayerInput playerInput;
 
     public static PlayerCommander Instance { get; private set; }
 
     Dictionary<SkillCommandEnum, Action<BattleActor[]>> commandDictionary;
+    Vector3 startPos;
 
     protected override void Awake()
     {
@@ -29,6 +34,8 @@ public class PlayerCommander : BattleActor
             { SkillCommandEnum.HeatWave, (BattleActor[] targets) => HeatWave(targets) },
             { SkillCommandEnum.Torchlight, (BattleActor[] targets) => Torchlight(targets) },
         };
+        playerController.enabled = false;
+        startPos = transform.position;
     }
 
     protected override void OnBattleStart()
@@ -57,6 +64,39 @@ public class PlayerCommander : BattleActor
         actionSelector.gameObject.SetActive(false);
         minigame.StartMinigame(this, targets);
         //commandDictionary[skillCommand].Invoke(targets);
+    }
+
+    public void SetMovement(bool doMovement)
+    {
+        if (goBackCoroutine != null)
+        {
+            StopCoroutine(goBackCoroutine);
+        }
+
+        if (doMovement)
+        {
+            playerController.enabled = true;
+            playerInput.SwitchCurrentActionMap("Player");
+        }
+        else
+        {
+            playerController.enabled = false;
+            playerInput.SwitchCurrentActionMap("UI");
+            goBackCoroutine = StartCoroutine(GoBack());
+        }
+    }
+
+    Coroutine goBackCoroutine;
+    IEnumerator GoBack()
+    {
+        WaitForFixedUpdate waitForFixedUpdate = new WaitForFixedUpdate();
+        while (Vector3.Distance(transform.position, startPos) > 0.1f)
+        {
+            // TODO: GET RID OF MAGIC NUMBER 7
+            characterController.Move((startPos - transform.position).normalized * 7.0f * Time.fixedDeltaTime);
+            yield return waitForFixedUpdate;
+        }
+        goBackCoroutine = null;
     }
 
     private void Ember(BattleActor[] targets)

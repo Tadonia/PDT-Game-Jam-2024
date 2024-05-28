@@ -132,3 +132,6 @@ MonoBehaviour:
   targetCircle: {fileID: 5212097100905169833, guid: a085ffcfdda7a24499d725ea37716cb1, type: 3}
   horizontalSpeed: 7
   gravity: -10
+  playerMask:
+    serializedVersion: 2
+    m_Bits: 128

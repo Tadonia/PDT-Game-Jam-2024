@@ -7,8 +7,10 @@ public class MissileProjectile : MonoBehaviour
     [SerializeField] GameObject targetCircle;
     [SerializeField] float horizontalSpeed = 5f;
     [SerializeField] float gravity = -10f;
+    [SerializeField] LayerMask playerMask;
 
     MissileMinigame minigame;
+    PlayerCommander player;
     Transform playerTransform;
     GameObject circleObject;
     bool initialised = false;
@@ -20,6 +22,7 @@ public class MissileProjectile : MonoBehaviour
     {
         initialised = true;
         this.minigame = minigame;
+        this.player = player;
         playerTransform = player.transform;
         circleObject = Instantiate(targetCircle, playerTransform.position, Quaternion.identity);
 
@@ -52,6 +55,9 @@ public class MissileProjectile : MonoBehaviour
         transform.rotation = Quaternion.LookRotation(velocity);
         if (Vector3.Distance(transform.position, circleObject.transform.position) < 0.1f || timer >= timeTaken)
         {
+            Collider[] colliders = Physics.OverlapSphere(circleObject.transform.position, 1.0f, playerMask, QueryTriggerInteraction.Ignore);
+            if (colliders.Length > 0)
+                player.DamageHealth(5f);
             minigame.RemoveMissile(gameObject);
             Destroy(gameObject);
         }

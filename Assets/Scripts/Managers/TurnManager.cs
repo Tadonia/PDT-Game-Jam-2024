@@ -4,7 +4,12 @@ using UnityEngine;
 
 public class TurnManager : MonoBehaviour
 {
+    [SerializeField] float delayBeforeBattleStarts = 1.0f;
+
     public static TurnManager Instance { get; private set; }
+
+    public delegate void OnBattleStart();
+    public OnBattleStart onBattleStart;
 
     BattleActor[] battleActors;
     List<BattleActor> turnOrder;
@@ -12,13 +17,17 @@ public class TurnManager : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance != null) return;
+        if (Instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
         Instance = this;
     }
 
     public void Start()
     {
-        StartBattle();
+        StartCoroutine(StartBattleAfterDelay());
     }
 
     public void StartBattle()
@@ -33,6 +42,13 @@ public class TurnManager : MonoBehaviour
         }*/
         turnOrder[0].OnTurnStart();
         turnCount = 0;
+        onBattleStart?.Invoke();
+    }
+
+    IEnumerator StartBattleAfterDelay()
+    {
+        yield return new WaitForSeconds(delayBeforeBattleStarts);
+        StartBattle();
     }
 
     public void NextTurn()

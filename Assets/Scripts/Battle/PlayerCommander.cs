@@ -2,25 +2,39 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerCommander : BattleActor
 {
+    [Header("Player Commander Variables")]
     [SerializeField] ActionSelector actionSelector;
+    [SerializeField] PlayerController playerController;
+    [SerializeField] CharacterController characterController;
+    [SerializeField] PlayerInput playerInput;
 
     public static PlayerCommander Instance { get; private set; }
 
-    Dictionary<SkillCommandEnum, Action> commandDictionary;
+    Vector3 startPos;
 
-    private void Awake()
+    protected override void Awake()
     {
-        commandDictionary = new Dictionary<SkillCommandEnum, Action>
+        base.Awake();
+        if (Instance != null)
         {
-            { SkillCommandEnum.Ember, () => Ember() },
-            { SkillCommandEnum.FireSpear, () => FireSpear() },
-            { SkillCommandEnum.FlameBurst, () => FlameBurst() },
-            { SkillCommandEnum.HeatWave, () => HeatWave() },
-            { SkillCommandEnum.Torchlight, () => Torchlight() },
-        };
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+        playerController.enabled = false;
+        startPos = transform.position;
+    }
+
+    protected override void OnBattleStart()
+    {
+        base.OnBattleStart();
+
+        // TODO: REMOVE
+        SetStats(actorStats, actorStats.vitality * 5f + 25f, actorStats.spirit * 5f);
     }
 
     public override void OnTurnStart()
@@ -36,47 +50,44 @@ public class PlayerCommander : BattleActor
         actionSelector.gameObject.SetActive(false);
     }
 
-    public void DoCommand(SkillCommandEnum skillCommand)
+    public void DoCommand(ActionObject minigame, BattleActor[] targets)
     {
-        commandDictionary[skillCommand].Invoke();
+        actionSelector.gameObject.SetActive(false);
+        ReduceMP(minigame.MPCost);
+        minigame.StartMinigame(this, targets);
+        //commandDictionary[skillCommand].Invoke(targets);
     }
 
-    private void Ember()
+    public void SetMovement(bool doMovement)
     {
-        Debug.Log("Ember");
-        OnTurnEnd();
+        if (goBackCoroutine != null)
+        {
+            StopCoroutine(goBackCoroutine);
+        }
+
+        if (doMovement)
+        {
+            playerController.enabled = true;
+            playerInput.SwitchCurrentActionMap("Player");
+        }
+        else
+        {
+            playerController.enabled = false;
+            playerInput.SwitchCurrentActionMap("UI");
+            goBackCoroutine = StartCoroutine(GoBack());
+        }
     }
 
-    private void FireSpear()
+    Coroutine goBackCoroutine;
+    IEnumerator GoBack()
     {
-        Debug.Log("Fire Spear");
-        OnTurnEnd();
+        WaitForFixedUpdate waitForFixedUpdate = new WaitForFixedUpdate();
+        while (Vector3.Distance(transform.position, startPos) > 0.1f)
+        {
+            // TODO: GET RID OF MAGIC NUMBER 7
+            characterController.Move((startPos - transform.position).normalized * 7.0f * Time.fixedDeltaTime);
+            yield return waitForFixedUpdate;
+        }
+        goBackCoroutine = null;
     }
-
-    private void FlameBurst()
-    {
-        Debug.Log("Flame Burst");
-        OnTurnEnd();
-    }
-
-    private void HeatWave()
-    {
-        Debug.Log("Heat Wave");
-        OnTurnEnd();
-    }
-
-    private void Torchlight()
-    {
-        Debug.Log("Torchlight");
-        OnTurnEnd();
-    }
-}
-
-public enum SkillCommandEnum
-{
-    Ember,
-    FireSpear,
-    FlameBurst,
-    HeatWave,
-    Torchlight
 }

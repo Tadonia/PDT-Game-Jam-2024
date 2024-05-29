@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, IWorldHittable
 {
     [SerializeField, Tooltip("Affects whether input can move the player or not. Player can still be moved by other means.")] 
     bool inputMovement = true;
@@ -109,5 +109,10 @@ public class PlayerController : MonoBehaviour
     public void SetPosition(Vector3 newPosition)
     {
         transform.position = newPosition;
+    }
+
+    public void OnWorldHit()
+    {
+        Debug.Log("HiT!");
     }
 }

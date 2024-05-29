@@ -77,6 +77,18 @@ public abstract class BattleActor : MonoBehaviour, IComparable<BattleActor>
         statsBar.UpdateStatsBar(currentHP, currentMP, maxHP, maxMP);
     }
 
+    public void ReduceMP(float MPAmount)
+    {
+        currentMP -= MPAmount;
+        statsBar.UpdateStatsBar(currentHP, currentMP, maxHP, maxMP);
+    }
+
+    public void RecoverMP(float MPAmount)
+    {
+        currentMP += MPAmount;
+        statsBar.UpdateStatsBar(currentHP, currentMP, maxHP, maxMP);
+    }
+
     public int CompareTo(BattleActor other)
     {
         if (other == null) return 0;

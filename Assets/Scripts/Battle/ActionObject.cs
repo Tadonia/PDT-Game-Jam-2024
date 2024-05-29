@@ -8,6 +8,8 @@ public class ActionObject : ScriptableObject
     public string actionName;
     public Sprite icon;
     public GameObject attackMinigame;
+    public TargetSelection targetSelection;
+    public float MPCost;
 
     [HideInInspector] public GameObject minigameObject;
     IPlayerMinigame minigame;
@@ -18,4 +20,10 @@ public class ActionObject : ScriptableObject
         minigame = minigameObject.GetComponent<IPlayerMinigame>();
         minigame.StartMinigame(player, targets);
     }
+}
+
+public enum TargetSelection
+{
+    Single,
+    All
 }

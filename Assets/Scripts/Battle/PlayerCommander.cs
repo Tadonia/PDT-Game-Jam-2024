@@ -53,6 +53,7 @@ public class PlayerCommander : BattleActor
     public void DoCommand(ActionObject minigame, BattleActor[] targets)
     {
         actionSelector.gameObject.SetActive(false);
+        ReduceMP(minigame.MPCost);
         minigame.StartMinigame(this, targets);
         //commandDictionary[skillCommand].Invoke(targets);
     }

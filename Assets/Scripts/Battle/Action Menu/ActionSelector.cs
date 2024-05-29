@@ -32,10 +32,12 @@ public class ActionSelector : MonoBehaviour
     bool itemsSelected;
 
     bool selectingEnemies;
+    bool targetingAll;
     BattleActor[] enemyTargets;
     int selectedTarget;
     ActionObject currentMinigame;
     ActionListButton lastSelectedButton;
+    List<RectTransform> cursorClones;
 
     private void Awake()
     {
@@ -75,14 +77,14 @@ public class ActionSelector : MonoBehaviour
 
     private void OnNavigateInput(Vector2 input)
     {
-        if (selectingEnemies)
+        if (selectingEnemies && !targetingAll)
         {
             selectedTarget += (int)input.y;
             if (selectedTarget > enemyTargets.Length - 1)
                 selectedTarget = 0;
             else if (selectedTarget < 0)
                 selectedTarget = enemyTargets.Length - 1;
-            UIOverlayManager.Instance.SetUIElementPosition(enemyCursor, enemyTargets[selectedTarget].transform.position + Vector3.up * 2.5f);
+            UIOverlayManager.Instance.SetUIElementPosition(enemyCursor, enemyTargets[selectedTarget].transform.position + new Vector3(0f, 2.5f, 0.33f));
         }
         else if (isListRevealed && input.x < 0)
         {
@@ -95,7 +97,8 @@ public class ActionSelector : MonoBehaviour
         if (selectingEnemies)
         {
             selectingEnemies = false;
-            BattleActor[] targets = new BattleActor[1] { enemyTargets[selectedTarget] };
+            BattleActor[] targets = enemyTargets;
+            if (!targetingAll) targets = new BattleActor[1] { enemyTargets[selectedTarget] };
             playerCommander.DoCommand(currentMinigame, targets);
         }
     }
@@ -109,6 +112,16 @@ public class ActionSelector : MonoBehaviour
             lastSelectedButton.OnSelect(new BaseEventData(EventSystem.current));
             enemyCursor.gameObject.SetActive(false);
             currentMinigame = null;
+
+            if (targetingAll)
+            {
+                targetingAll = false;
+                for (int i = cursorClones.Count - 1; i >= 0; i--)
+                {
+                    Destroy(cursorClones[i].gameObject);
+                }
+                cursorClones.Clear();
+            }
         }
     }
     #endregion
@@ -130,10 +143,24 @@ public class ActionSelector : MonoBehaviour
         selectingEnemies = true;
         currentMinigame = minigame;
         lastSelectedButton = selectedButton;
+        targetingAll = minigame.targetSelection == TargetSelection.Single ? false : true;
+
         EventSystem.current.SetSelectedGameObject(null);
         selectedTarget = 0;
+
         enemyCursor.gameObject.SetActive(true);
-        UIOverlayManager.Instance.SetUIElementPosition(enemyCursor, enemyTargets[selectedTarget].transform.position + Vector3.up * 2.5f);
+        UIOverlayManager.Instance.SetUIElementPosition(enemyCursor, enemyTargets[selectedTarget].transform.position + new Vector3(0f, 2.5f, 0.33f));
+
+        if (targetingAll)
+        {
+            cursorClones = new List<RectTransform>();
+            for (int i = 1; i < enemyTargets.Length; i++)
+            {
+                RectTransform cursorClone = Instantiate(enemyCursor.gameObject, UIOverlayManager.Instance.GetCanvas().transform).GetComponent<RectTransform>();
+                UIOverlayManager.Instance.SetUIElementPosition(cursorClone, enemyTargets[i].transform.position + new Vector3(0f, 2.5f, 0.33f));
+                cursorClones.Add(cursorClone);
+            }
+        }
     }
 
     public void AttackButton()

@@ -16361,6 +16361,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2878712063194177153, guid: 50ff0b9ec04d51d4eaa0122c725b215f, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2878712063194177153, guid: 50ff0b9ec04d51d4eaa0122c725b215f, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5661308839596675147, guid: 50ff0b9ec04d51d4eaa0122c725b215f, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -235
+      objectReference: {fileID: 0}
     - target: {fileID: 6570226645684996146, guid: 50ff0b9ec04d51d4eaa0122c725b215f, type: 3}
       propertyPath: m_Name
       value: PlayerBattle

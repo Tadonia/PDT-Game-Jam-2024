@@ -5,12 +5,22 @@ using UnityEngine;
 public class EnemyActor : BattleActor
 {
     [SerializeField] Transform spriteTransform;
+    [SerializeField] EnemyActionObject action;
 
     Vector3 startPos;
 
-    public void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         startPos = spriteTransform.position;
+    }
+
+    protected override void OnBattleStart()
+    {
+        base.OnBattleStart();
+
+        // TODO: REMOVE
+        SetStats(actorStats, actorStats.vitality * 5f + 25f, actorStats.spirit * 5f);
     }
 
     public override void OnTurnEnd()
@@ -21,7 +31,20 @@ public class EnemyActor : BattleActor
     public override void OnTurnStart()
     {
         base.OnTurnStart();
-        StartCoroutine(Jump());
+        if (action == null)
+        {
+            StartCoroutine(Jump());
+        }
+        else
+        {
+            PerformAction();
+        }
+    }
+
+    private void PerformAction()
+    {
+        PlayerCommander player = PlayerCommander.Instance;
+        action.StartMinigame(this, new BattleActor[1] { player });
     }
 
     IEnumerator Jump()

@@ -12,7 +12,7 @@ public class ActionListButton : MonoBehaviour, ISelectHandler, ISubmitHandler, I
     [SerializeField] Image iconImage;
 
     ActionList actionList;
-    SkillCommandEnum skillCommand;
+    ActionObject playerMinigame;
 
     public void OnSelect(BaseEventData eventData)
     {
@@ -21,19 +21,19 @@ public class ActionListButton : MonoBehaviour, ISelectHandler, ISubmitHandler, I
 
     public void OnSubmit(BaseEventData eventData)
     {
-        actionList.DoCommand(skillCommand);
+        actionList.DoCommand(playerMinigame, this);
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        actionList.DoCommand(skillCommand);
+        actionList.DoCommand(playerMinigame, this);
     }
 
-    public void SetAction(string text, Sprite icon, ActionList list, SkillCommandEnum command)
+    public void SetAction(string text, Sprite icon, ActionList list, ActionObject minigame)
     {
         buttonText.text = text;
         actionList = list;
-        skillCommand = command;
+        playerMinigame = minigame;
     }
 
     public float GetButtonHeight()

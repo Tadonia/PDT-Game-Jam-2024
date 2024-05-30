@@ -159,6 +159,7 @@ public class ActionSelector : MonoBehaviour
         this.playerCommander = playerCommander;
         isListRevealed = false;
         listWindow.anchoredPosition = Vector3.zero;
+        listWindow.gameObject.SetActive(false);
         enemyCursor.gameObject.SetActive(false);
 
         BattleActor[] actors = FindObjectsOfType<BattleActor>();
@@ -242,7 +243,7 @@ public class ActionSelector : MonoBehaviour
             StopCoroutine(moveListWindowCoroutine);
             moveListWindowCoroutine = null;
         }
-        moveListWindowCoroutine = StartCoroutine(MoveListWindow(listWindow.anchoredPosition, listWindowTargetPostion));
+        moveListWindowCoroutine = StartCoroutine(MoveListWindow(listWindow.anchoredPosition, listWindowTargetPostion, false));
     }
 
     public void HideList()
@@ -266,12 +267,13 @@ public class ActionSelector : MonoBehaviour
             StopCoroutine(moveListWindowCoroutine);
             moveListWindowCoroutine = null;
         }
-        moveListWindowCoroutine = StartCoroutine(MoveListWindow(listWindow.anchoredPosition, Vector3.zero));
+        moveListWindowCoroutine = StartCoroutine(MoveListWindow(listWindow.anchoredPosition, Vector3.zero, true));
     }
 
     Coroutine moveListWindowCoroutine;
-    IEnumerator MoveListWindow(Vector3 initialPosition, Vector3 targetPosition)
+    IEnumerator MoveListWindow(Vector3 initialPosition, Vector3 targetPosition, bool hide = false)
     {
+        listWindow.gameObject.SetActive(true);
         float timer = 0f;
         while (timer <= listWindowRevealTime)
         {
@@ -280,5 +282,7 @@ public class ActionSelector : MonoBehaviour
             yield return null;
         }
         listWindow.anchoredPosition = targetPosition;
+        if (hide)
+            listWindow.gameObject.SetActive(false);
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,9 @@ public class TurnManager : MonoBehaviour
 
     public delegate void OnBattleStart();
     public OnBattleStart onBattleStart;
+
+    public delegate void OnNextTurn(BattleActor actor);
+    public OnNextTurn onNextTurn;
 
     BattleActor[] battleActors;
     List<BattleActor> turnOrder;
@@ -43,6 +47,7 @@ public class TurnManager : MonoBehaviour
         turnOrder[0].OnTurnStart();
         turnCount = 0;
         onBattleStart?.Invoke();
+        onNextTurn?.Invoke(turnOrder[0]);
     }
 
     IEnumerator StartBattleAfterDelay()
@@ -54,6 +59,8 @@ public class TurnManager : MonoBehaviour
     public void NextTurn()
     {
         turnCount++;
-        turnOrder[turnCount % turnOrder.Count].OnTurnStart();
+        int index = turnCount % turnOrder.Count;
+        turnOrder[index].OnTurnStart();
+        onNextTurn?.Invoke(turnOrder[index]);
     }
 }

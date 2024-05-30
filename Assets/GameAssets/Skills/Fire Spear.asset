@@ -14,5 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actionName: Fire Spear
   icon: {fileID: 0}
-  attackMinigame: {fileID: 6337995497600330490, guid: 86c49fa680984f9469bd101164ed19a1, type: 3}
+  attackMinigame: {fileID: 541104432624441142, guid: 6991424518ca72745a1f1209b8cac3a6, type: 3}
+  targetSelection: 0
+  MPCost: 15
   minigameObject: {fileID: 0}

@@ -475,12 +475,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   actorStats:
-    vitality: 5
-    strength: 5
-    spirit: 5
-    speed: 5
-    defence: 5
-    resistance: 5
+    vitality: 10
+    strength: 10
+    spirit: 10
+    speed: 10
+    defence: 10
+    resistance: 10
   allegiance: 1
   statsBarPrefab: {fileID: 5967871131720504777, guid: caedb4f398faaf2479abb752d2d358fb, type: 3}
   debugMessages: 1

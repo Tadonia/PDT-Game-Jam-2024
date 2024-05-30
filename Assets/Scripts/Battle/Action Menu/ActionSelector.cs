@@ -99,7 +99,28 @@ public class ActionSelector : MonoBehaviour
             selectingEnemies = false;
             BattleActor[] targets = enemyTargets;
             if (!targetingAll) targets = new BattleActor[1] { enemyTargets[selectedTarget] };
-            playerCommander.DoCommand(currentMinigame, targets);
+
+            if (isListRevealed)
+            {
+                playerCommander.DoCommand(currentMinigame, targets);
+            }
+            else
+            {
+                float damage = playerCommander.actorStats.strength * 2f;
+                enemyTargets[selectedTarget].DamageHealth(damage);
+                BattleElementManager.Instance.AddDamageText(damage, enemyTargets[selectedTarget].transform.position + Vector3.up);
+                playerCommander.OnTurnEnd();
+            }
+
+            if (targetingAll)
+            {
+                targetingAll = false;
+                for (int i = cursorClones.Count - 1; i >= 0; i--)
+                {
+                    Destroy(cursorClones[i].gameObject);
+                }
+                cursorClones.Clear();
+            }
         }
     }
 
@@ -108,8 +129,15 @@ public class ActionSelector : MonoBehaviour
         if (selectingEnemies)
         {
             selectingEnemies = false;
-            EventSystem.current.SetSelectedGameObject(lastSelectedButton.gameObject);
-            lastSelectedButton.OnSelect(new BaseEventData(EventSystem.current));
+            if (isListRevealed)
+            {
+                EventSystem.current.SetSelectedGameObject(lastSelectedButton.gameObject);
+                lastSelectedButton.OnSelect(new BaseEventData(EventSystem.current));
+            }
+            else
+            {
+                EventSystem.current.SetSelectedGameObject(attackButton.gameObject);
+            }
             enemyCursor.gameObject.SetActive(false);
             currentMinigame = null;
 
@@ -131,6 +159,7 @@ public class ActionSelector : MonoBehaviour
         this.playerCommander = playerCommander;
         isListRevealed = false;
         listWindow.anchoredPosition = Vector3.zero;
+        listWindow.gameObject.SetActive(false);
         enemyCursor.gameObject.SetActive(false);
 
         BattleActor[] actors = FindObjectsOfType<BattleActor>();
@@ -163,9 +192,14 @@ public class ActionSelector : MonoBehaviour
         }
     }
 
+    #region Buttons
     public void AttackButton()
     {
-        playerCommander.OnTurnEnd();
+        selectingEnemies = true;
+        EventSystem.current.SetSelectedGameObject(null);
+        selectedTarget = 0;
+        enemyCursor.gameObject.SetActive(true);
+        UIOverlayManager.Instance.SetUIElementPosition(enemyCursor, enemyTargets[selectedTarget].transform.position + new Vector3(0f, 2.5f, 0.33f));
     }
 
     public void SkillsButton()
@@ -198,6 +232,7 @@ public class ActionSelector : MonoBehaviour
     {
         playerCommander.OnTurnEnd();
     }
+    #endregion
 
     public void RevealList()
     {
@@ -208,7 +243,7 @@ public class ActionSelector : MonoBehaviour
             StopCoroutine(moveListWindowCoroutine);
             moveListWindowCoroutine = null;
         }
-        moveListWindowCoroutine = StartCoroutine(MoveListWindow(listWindow.anchoredPosition, listWindowTargetPostion));
+        moveListWindowCoroutine = StartCoroutine(MoveListWindow(listWindow.anchoredPosition, listWindowTargetPostion, false));
     }
 
     public void HideList()
@@ -232,12 +267,13 @@ public class ActionSelector : MonoBehaviour
             StopCoroutine(moveListWindowCoroutine);
             moveListWindowCoroutine = null;
         }
-        moveListWindowCoroutine = StartCoroutine(MoveListWindow(listWindow.anchoredPosition, Vector3.zero));
+        moveListWindowCoroutine = StartCoroutine(MoveListWindow(listWindow.anchoredPosition, Vector3.zero, true));
     }
 
     Coroutine moveListWindowCoroutine;
-    IEnumerator MoveListWindow(Vector3 initialPosition, Vector3 targetPosition)
+    IEnumerator MoveListWindow(Vector3 initialPosition, Vector3 targetPosition, bool hide = false)
     {
+        listWindow.gameObject.SetActive(true);
         float timer = 0f;
         while (timer <= listWindowRevealTime)
         {
@@ -246,5 +282,7 @@ public class ActionSelector : MonoBehaviour
             yield return null;
         }
         listWindow.anchoredPosition = targetPosition;
+        if (hide)
+            listWindow.gameObject.SetActive(false);
     }
 }

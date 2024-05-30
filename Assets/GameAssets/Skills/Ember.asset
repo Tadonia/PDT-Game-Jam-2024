@@ -15,6 +15,6 @@ MonoBehaviour:
   actionName: Ember
   icon: {fileID: 0}
   attackMinigame: {fileID: 6337995497600330490, guid: 86c49fa680984f9469bd101164ed19a1, type: 3}
-  targetSelection: 1
+  targetSelection: 0
   MPCost: 5
   minigameObject: {fileID: 0}

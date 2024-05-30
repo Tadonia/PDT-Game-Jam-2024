@@ -215,7 +215,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetCircle: {fileID: 5212097100905169833, guid: a085ffcfdda7a24499d725ea37716cb1, type: 3}
-  horizontalSpeed: 14
+  horizontalSpeed: 10
   gravity: -10
   playerMask:
     serializedVersion: 2

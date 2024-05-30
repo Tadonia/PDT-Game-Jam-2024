@@ -100,6 +100,16 @@ public class ActionSelector : MonoBehaviour
             BattleActor[] targets = enemyTargets;
             if (!targetingAll) targets = new BattleActor[1] { enemyTargets[selectedTarget] };
             playerCommander.DoCommand(currentMinigame, targets);
+
+            if (targetingAll)
+            {
+                targetingAll = false;
+                for (int i = cursorClones.Count - 1; i >= 0; i--)
+                {
+                    Destroy(cursorClones[i].gameObject);
+                }
+                cursorClones.Clear();
+            }
         }
     }
 

@@ -45,6 +45,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   missile: {fileID: 6799807055653948879, guid: ecc9fcbb3454e8f4fa1340a2ff288adf, type: 3}
-  numberOfMissiles: 3
-  minWaitTime: 0.5
-  maxWaitTime: 2
+  numberOfMissiles: 5
+  minWaitTime: 0.25
+  maxWaitTime: 0.75

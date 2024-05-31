@@ -58,8 +58,8 @@ public class PlayerController : MonoBehaviour, IWorldHittable
                 PlayerAttack();
             }
         }
-        if (context.canceled)
-            ;
+        /*if (context.canceled)
+            ;*/
     }
     #endregion
 
@@ -135,7 +135,7 @@ public class PlayerController : MonoBehaviour, IWorldHittable
 
     private void RotatePlayer(Vector3 motion)
     {
-        if (motion.magnitude >= 0.005f)
+        if (motion.magnitude >= 0.005f && lookCursor)
         {
             Quaternion lookRotation = Quaternion.LookRotation(motion) * Quaternion.Euler(0.0f, -90.0f, 0.0f);
             attackHitbox.transform.rotation = lookRotation;
@@ -151,7 +151,7 @@ public class PlayerController : MonoBehaviour, IWorldHittable
 
     public void SetAttackHitbox(bool toggle)
     {
-        attackHitbox.SetActive(toggle);
+        if (attackHitbox) attackHitbox.SetActive(toggle);
     }
 
     public void ToggleAttackHitbox()

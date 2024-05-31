@@ -90,7 +90,8 @@ public class WorldEnemyController : MonoBehaviour, IWorldHittable
 
     public void StartBattle(Allegiance allegiance = Allegiance.Player)
     {
-        int totalWeight = 0;
+        Debug.Log("Start Battle");
+        /*int totalWeight = 0;
         numberOfEnemies = Random.Range(minEnemies, maxEnemies + 1);
         enemiesToSpawn = new GameObject[numberOfEnemies];
         enemiesToSpawn[0] = enemyPool[0].enemy;
@@ -105,9 +106,10 @@ public class WorldEnemyController : MonoBehaviour, IWorldHittable
         {
             int randomChoice = Random.Range(0, totalWeight);
             enemiesToSpawn[i] = WeightedSelection(randomChoice);
-        }
+        }*/
 
         //!!! Have some function to send enemiesToSpawn and isAttacked to the battle scene !!!
+        GameManager.Instance.SceneLoader.SetScene(2);
     }
 
     GameObject WeightedSelection(int number)

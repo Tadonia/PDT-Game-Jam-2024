@@ -29,6 +29,7 @@ public class Hitbox : MonoBehaviour
     Color hitboxColor = new Color(1, 0, 0, 0.3f);
 
     Collider[] colliders;
+    bool hasHit;
 
     void Start()
     {
@@ -113,11 +114,15 @@ public class Hitbox : MonoBehaviour
         SetActive(toggleHitbox);
     }
 
-    private void OnCollisionStay(Collision collision)
+    private void OnTriggerStay(Collider other)
     {
-        if (attackType == AttackType.World && collision.gameObject.TryGetComponent<IWorldHittable>(out IWorldHittable hittable))
+        if (hasHit)
+            return;
+
+        if (other.TryGetComponent<IWorldHittable>(out IWorldHittable hittable))
         {
             hittable.OnWorldHit(allegiance, damage, gameObject);
+            hasHit = true;
         }
 
         if (attackType == AttackType.Battle)

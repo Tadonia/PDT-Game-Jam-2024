@@ -11,6 +11,7 @@ public class FireSpearMinigame : MonoBehaviour, IPlayerMinigame
     [SerializeField] float speed = 700f;
     [SerializeField] float furthestDistance = 100f;
     [SerializeField] float damagePerStr = 5f;
+    [SerializeField] AudioObject waterSound;
 
     public void StartMinigame(PlayerCommander player, BattleActor[] targets)
     {
@@ -49,6 +50,7 @@ public class FireSpearMinigame : MonoBehaviour, IPlayerMinigame
         {
             target.DamageHealth(damage);
             BattleElementManager.Instance.AddDamageText(damage, target.transform.position + Vector3.up);
+            waterSound.PlayAudio(target.transform.position);
         }
 
         yield return new WaitForSeconds(1);

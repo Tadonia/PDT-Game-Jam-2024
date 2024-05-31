@@ -58,7 +58,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.5019608, g: 0.5019608, b: 1, a: 1}
+  m_Color: {r: 0.11698109, g: 0.05882353, b: 0.09803922, a: 0.60784316}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -401,6 +401,7 @@ MonoBehaviour:
   listButton: {fileID: 4305618931886096722, guid: b625a2d0a5845b84bbac0db0860e538a, type: 3}
   contextTransform: {fileID: 4144427797526549913}
   scrollRect: {fileID: 761457751601357861}
+  actionSelector: {fileID: 0}
 --- !u!1 &6967525563973332752
 GameObject:
   m_ObjectHideFlags: 0

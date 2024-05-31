@@ -10,7 +10,7 @@ public struct EnemyAppearances
     public int enemySpawnWeight;
 }
 
-public class WorldEnemyController : MonoBehaviour
+public class WorldEnemyController : MonoBehaviour, IWorldHittable
 {
     [SerializeField] NavMeshAgent enemyAi;
     [SerializeField] SpriteRenderer sprite;
@@ -88,7 +88,7 @@ public class WorldEnemyController : MonoBehaviour
         StartCoroutine(ChaseRate());
     }
 
-    void StartBattle()
+    public void StartBattle(Allegiance allegiance = Allegiance.Player)
     {
         int totalWeight = 0;
         numberOfEnemies = Random.Range(minEnemies, maxEnemies + 1);
@@ -122,5 +122,13 @@ public class WorldEnemyController : MonoBehaviour
             }
         }
         return enemyPool[1].enemy;
+    }
+
+    public void OnWorldHit(Allegiance allegiance, int damage, GameObject hitter)
+    {
+        if (allegiance == Allegiance.Player)
+        {
+            StartBattle(allegiance);
+        }
     }
 }

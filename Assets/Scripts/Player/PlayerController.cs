@@ -3,8 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, IWorldHittable
 {
+    [SerializeField]
+    Animator animate;
+    [SerializeField]
+    AnimationClip attackClip;
+    [SerializeField]
+    Transform lookCursor;
+    [SerializeField]
+    Hitbox attackHitbox;
     [SerializeField, Tooltip("Affects whether input can move the player or not. Player can still be moved by other means.")] 
     bool inputMovement = true;
 
@@ -14,12 +22,15 @@ public class PlayerController : MonoBehaviour
 
     Vector2 moveInput;
     Vector3 velocity;
+    //bool isHit;
+    bool isAttacking;
 
     CharacterController cc;
 
     private void Awake()
     {
         cc = GetComponent<CharacterController>();
+        SetAttackHitbox(false);
     }
 
     private void FixedUpdate()
@@ -35,6 +46,20 @@ public class PlayerController : MonoBehaviour
             moveInput = context.ReadValue<Vector2>();
         if (context.canceled)
             moveInput = Vector2.zero;
+    }
+
+    public void FireInput(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            if (!isAttacking)
+            {
+                isAttacking = true;
+                PlayerAttack();
+            }
+        }
+        if (context.canceled)
+            ;
     }
     #endregion
 
@@ -103,11 +128,56 @@ public class PlayerController : MonoBehaviour
         {
             moveVelocity = moveVelocity.normalized * maxSpeed;
         }
-        cc.Move(new Vector3(moveVelocity.x, velocity.y, moveVelocity.y) * Time.fixedDeltaTime);
+        Vector3 motion = new Vector3(moveVelocity.x, velocity.y, moveVelocity.y) * Time.fixedDeltaTime;
+        cc.Move(motion);
+        RotatePlayer(motion);
+    }
+
+    private void RotatePlayer(Vector3 motion)
+    {
+        if (motion.magnitude >= 0.005f)
+        {
+            Quaternion lookRotation = Quaternion.LookRotation(motion) * Quaternion.Euler(0.0f, -90.0f, 0.0f);
+            attackHitbox.transform.rotation = lookRotation;
+            lookRotation *= Quaternion.Euler(90.0f, 90.0f, 90.0f);
+            lookCursor.rotation = lookRotation;
+        }
     }
 
     public void SetPosition(Vector3 newPosition)
     {
         transform.position = newPosition;
+    }
+
+    public void SetAttackHitbox(bool toggle)
+    {
+        attackHitbox.SetActive(toggle);
+    }
+
+    public void ToggleAttackHitbox()
+    {
+        attackHitbox.SetActive(!attackHitbox.GetToggleStatus());
+    }
+
+    private void PlayerAttack()
+    {
+        WaitForSeconds wait = new WaitForSeconds(attackClip.averageDuration);
+        StartCoroutine(AttackAnimation(wait));
+    }
+
+    IEnumerator AttackAnimation(WaitForSeconds wait)
+    {
+        animate.SetTrigger("Attack");
+        yield return wait;
+        animate.ResetTrigger("Attack");
+        isAttacking = false;
+    }
+
+    public void OnWorldHit(Allegiance allegiance, int damage, GameObject hitter)
+    {
+        if (allegiance == Allegiance.Enemy && TryGetComponent<WorldEnemyController>(out WorldEnemyController enemy))
+        {
+            enemy.StartBattle(allegiance);
+        }
     }
 }

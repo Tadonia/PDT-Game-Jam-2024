@@ -48,6 +48,7 @@ public class ActionSelector : MonoBehaviour
     {
         listCursor.gameObject.SetActive(false);
         enemyCursor.gameObject.SetActive(false);
+        listWindow.gameObject.SetActive(false);
     }
 
     #region inputs
@@ -161,6 +162,7 @@ public class ActionSelector : MonoBehaviour
         listWindow.anchoredPosition = Vector3.zero;
         listWindow.gameObject.SetActive(false);
         enemyCursor.gameObject.SetActive(false);
+        listWindow.gameObject.SetActive(false);
 
         BattleActor[] actors = FindObjectsOfType<BattleActor>();
         enemyTargets = (from a in actors orderby a.transform.position.y descending where a.allegiance is ActorAllegiance.Enemy select a).ToArray<BattleActor>();
@@ -238,6 +240,7 @@ public class ActionSelector : MonoBehaviour
     {
         if (isListRevealed) return;
         isListRevealed = true;
+        listWindow.gameObject.SetActive(true);
         if (moveListWindowCoroutine != null)
         {
             StopCoroutine(moveListWindowCoroutine);
@@ -262,6 +265,7 @@ public class ActionSelector : MonoBehaviour
 
         isListRevealed = false;
         enemyCursor.gameObject.SetActive(false);
+        listWindow.gameObject.SetActive(false);
         if (moveListWindowCoroutine != null)
         {
             StopCoroutine(moveListWindowCoroutine);

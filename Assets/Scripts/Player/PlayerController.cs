@@ -15,6 +15,8 @@ public class PlayerController : MonoBehaviour, IWorldHittable
     Hitbox attackHitbox;
     [SerializeField, Tooltip("Affects whether input can move the player or not. Player can still be moved by other means.")] 
     bool inputMovement = true;
+    [SerializeField]
+    AudioObject grassSoundObject;
 
     [Header("World Movement")]
     [SerializeField] float maxSpeed = 7.0f;
@@ -24,6 +26,7 @@ public class PlayerController : MonoBehaviour, IWorldHittable
     Vector3 velocity;
     //bool isHit;
     bool isAttacking;
+    AudioInstance grassSound;
 
     CharacterController cc;
 
@@ -43,7 +46,7 @@ public class PlayerController : MonoBehaviour, IWorldHittable
     public void MoveInput(InputAction.CallbackContext context)
     {
         if (context.performed)
-            moveInput = context.ReadValue<Vector2>();
+            moveInput = context.ReadValue<Vector2>().normalized;
         if (context.canceled)
             moveInput = Vector2.zero;
     }
@@ -131,6 +134,10 @@ public class PlayerController : MonoBehaviour, IWorldHittable
         Vector3 motion = new Vector3(moveVelocity.x, velocity.y, moveVelocity.y) * Time.fixedDeltaTime;
         cc.Move(motion);
         RotatePlayer(motion);
+        if (motion.magnitude > 0.1f && (!grassSound || !grassSound.IsPlaying ))
+        {
+            grassSound = grassSoundObject.PlayAudio(transform.position);
+        }
     }
 
     private void RotatePlayer(Vector3 motion)

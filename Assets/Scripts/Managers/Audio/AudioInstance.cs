@@ -18,4 +18,6 @@ public class AudioInstance : MonoBehaviour
     {
         audioSource.Stop();
     }
+
+    public bool IsPlaying => audioSource.isPlaying;
 }

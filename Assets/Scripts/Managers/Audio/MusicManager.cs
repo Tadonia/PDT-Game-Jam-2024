@@ -9,6 +9,7 @@ public class MusicManager : MonoBehaviour
     public void PlayMusic(AudioClip clip)
     {
         musicSource.clip = clip;
+        musicSource.loop = true;
         musicSource.Play();
     }
 }

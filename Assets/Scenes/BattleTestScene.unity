@@ -1148,6 +1148,10 @@ PrefabInstance:
       propertyPath: m_AnchorMin.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4985120398087350745, guid: 50ff0b9ec04d51d4eaa0122c725b215f, type: 3}
+      propertyPath: actorStats.strength
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 5661308839596675147, guid: 50ff0b9ec04d51d4eaa0122c725b215f, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -235

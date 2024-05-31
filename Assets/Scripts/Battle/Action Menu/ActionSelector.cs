@@ -162,6 +162,7 @@ public class ActionSelector : MonoBehaviour
         BattleActor[] actors = FindObjectsOfType<BattleActor>();
         enemyTargets = (from a in actors orderby a.transform.position.y descending where a.allegiance is ActorAllegiance.Enemy select a).ToArray<BattleActor>();
         Debug.Log("Targets: " + enemyTargets.Length);
+        if (enemyTargets.Length == 0) GameManager.Instance.SceneLoader.SetScene(1);
     }
 
     public void DoCommand(ActionObject minigame, ActionListButton selectedButton)

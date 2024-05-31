@@ -20,6 +20,7 @@ public class UITurnBanner : MonoBehaviour
     private void OnDisable()
     {
         TurnManager.Instance.onNextTurn -= SetTurn;
+        TurnManager.Instance.onBattleStart -= OnBattleStart;
     }
 
     public void OnBattleStart()

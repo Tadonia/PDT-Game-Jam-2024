@@ -9,6 +9,9 @@ public class SceneLoader : MonoBehaviour
     [SerializeField] Image background;
     [SerializeField] float backgroundFadeTime = 1.0f;
 
+    public delegate void OnSceneLoad();
+    public OnSceneLoad onSceneLoad;
+
     public int currentSceneIndex { get; private set; }
     public int previousSceneIndex { get; private set; }
 
@@ -23,6 +26,7 @@ public class SceneLoader : MonoBehaviour
 
     public void SetScene(int sceneIndex)
     {
+        onSceneLoad?.Invoke();
         if (SceneManager.sceneCount < 1)
         {
             SceneManager.LoadSceneAsync(sceneIndex, LoadSceneMode.Single);

@@ -29,18 +29,24 @@ public abstract class BattleActor : MonoBehaviour, IComparable<BattleActor>
         TurnManager.Instance.onBattleStart += OnBattleStart;
     }
 
+    protected virtual void OnDisable()
+    {
+        TurnManager.Instance.onBattleStart -= OnBattleStart;
+    }
+
     protected virtual void Update()
     {
         if (battleStarted)
         {
-            UIOverlayManager.Instance.SetUIElementPosition(statsBar.transform, transform.position + new Vector3(0f, 2.17f, 0.33f));
+            if (statsBar)
+                UIOverlayManager.Instance.SetUIElementPosition(statsBar.transform, transform.position + new Vector3(0f, 2.17f, 0.33f));
         }
     }
 
     protected virtual void OnDestroy()
     {
         StopAllCoroutines();
-        Destroy(statsBar.gameObject);
+        if (statsBar) Destroy(statsBar.gameObject);
     }
 
     protected virtual void OnBattleStart()

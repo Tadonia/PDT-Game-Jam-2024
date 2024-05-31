@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 
 public class FireSpearMinigame : MonoBehaviour, IPlayerMinigame
 {
@@ -13,9 +14,22 @@ public class FireSpearMinigame : MonoBehaviour, IPlayerMinigame
     [SerializeField] float damagePerStr = 5f;
     [SerializeField] AudioObject waterSound;
 
+    PlayerInput playerInput;
+    bool inputPressed;
+
     public void StartMinigame(PlayerCommander player, BattleActor[] targets)
     {
+        playerInput = player.GetComponentInChildren<PlayerInput>();
+        playerInput.currentActionMap.FindAction("Submit").performed += InputAction;
         StartCoroutine(Minigame(player, targets));
+    }
+
+    private void InputAction(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            inputPressed = true;
+        }
     }
 
     IEnumerator Minigame(PlayerCommander player, BattleActor[] targets)
@@ -25,7 +39,7 @@ public class FireSpearMinigame : MonoBehaviour, IPlayerMinigame
         movingPoint.anchoredPosition = Vector2.left * barLength / 2f;
 
         // Wait until Submit (Enter key) is activated
-        while (!activated || !EventSystem.current.currentInputModule.input.GetButtonDown("Submit"))
+        while (!activated || !inputPressed)
         {
             activated = true;
             movingPoint.anchoredPosition += speed * Time.deltaTime * (movingLeft ? Vector2.left : Vector2.right);
@@ -54,6 +68,7 @@ public class FireSpearMinigame : MonoBehaviour, IPlayerMinigame
         }
 
         yield return new WaitForSeconds(1);
+        playerInput.currentActionMap.FindAction("Submit").performed -= InputAction;
         player.OnTurnEnd();
         Destroy(gameObject);
     }

@@ -12,6 +12,9 @@ EditorBuildSettings:
     path: Assets/Scenes/WorldTestScene.unity
     guid: b5d4877c1259edd4098bac2848ab0049
   - enabled: 1
+    path: Assets/Scenes/KhangArtBattle.unity
+    guid: c31720264efe52e4b917669e5c925e7c
+  - enabled: 1
     path: Assets/Scenes/BattleTestScene.unity
     guid: c5773e38da8e1df4580e7e3ffe52df8d
   m_configObjects: {}

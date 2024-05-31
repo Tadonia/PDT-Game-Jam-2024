@@ -9,6 +9,7 @@ public abstract class BattleActor : MonoBehaviour, IComparable<BattleActor>
     public ActorStats actorStats;
     public ActorAllegiance allegiance;
     public GameObject statsBarPrefab;
+    public Vector3 statsBarOffset = new Vector3(0f, 2.17f, 0.33f);
     public bool debugMessages = true;
 
     [Header("Audio Objects")]
@@ -43,7 +44,7 @@ public abstract class BattleActor : MonoBehaviour, IComparable<BattleActor>
         if (battleStarted)
         {
             if (statsBar)
-                UIOverlayManager.Instance.SetUIElementPosition(statsBar.transform, transform.position + new Vector3(0f, 2.17f, 0.33f));
+                UIOverlayManager.Instance.SetUIElementPosition(statsBar.transform, transform.position + statsBarOffset);
         }
     }
 

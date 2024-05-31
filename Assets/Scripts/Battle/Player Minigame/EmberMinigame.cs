@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 
 public class EmberMinigame : MonoBehaviour, IPlayerMinigame
 {
@@ -16,22 +17,25 @@ public class EmberMinigame : MonoBehaviour, IPlayerMinigame
 
     int counter = 0;
     bool activated = false;
+    PlayerInput playerInput;
 
-    private void Update()
+    public void StartMinigame(PlayerCommander player, BattleActor[] targets)
     {
-        if (activated && EventSystem.current.currentInputModule.input.GetButtonDown("Submit"))
+        playerInput = player.GetComponentInChildren<PlayerInput>();
+        playerInput.currentActionMap.FindAction("Submit").performed += InputAction;
+        activated = true;
+        ps.transform.position = player.transform.position + Vector3.up;
+        StartCoroutine(Minigame(player, targets));
+    }
+
+    private void InputAction(InputAction.CallbackContext context)
+    {
+        if (activated && context.performed)
         {
             counter++;
             counterText.text = counter.ToString();
             ps.Emit(5);
         }
-    }
-
-    public void StartMinigame(PlayerCommander player, BattleActor[] targets)
-    {
-        activated = true;
-        ps.transform.position = player.transform.position + Vector3.up;
-        StartCoroutine(Minigame(player, targets));
     }
 
     IEnumerator Minigame(PlayerCommander player, BattleActor[] targets)
@@ -57,6 +61,7 @@ public class EmberMinigame : MonoBehaviour, IPlayerMinigame
             fireSound.PlayAudio(target.transform.position);
         }
         yield return new WaitForSeconds(1);
+        playerInput.currentActionMap.FindAction("Submit").performed -= InputAction;
         player.OnTurnEnd();
         Destroy(gameObject);
     }

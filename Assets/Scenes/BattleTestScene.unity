@@ -1025,7 +1025,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 535449562272123110, guid: 28297218812bfa047b0559338f79b10f, type: 3}
       propertyPath: m_Name
-      value: Enemy (1)
+      value: Enemy 1
       objectReference: {fileID: 0}
     - target: {fileID: 762412069504529618, guid: 28297218812bfa047b0559338f79b10f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1203,7 +1203,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6570226645684996146, guid: 50ff0b9ec04d51d4eaa0122c725b215f, type: 3}
       propertyPath: m_Name
-      value: PlayerBattle
+      value: Player
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

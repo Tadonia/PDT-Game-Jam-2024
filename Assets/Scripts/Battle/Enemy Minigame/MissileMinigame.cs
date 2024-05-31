@@ -25,7 +25,6 @@ public class MissileMinigame : MonoBehaviour, IEnemyMinigame
 
     IEnumerator Minigame(EnemyActor enemy, BattleActor[] targets)
     {
-        Debug.Log(targets[0].gameObject.name);
         missiles = new List<GameObject>();
         for (int i = 0; i < numberOfMissiles; i++)
         {

@@ -17,6 +17,10 @@ public class UIOverlayManager : MonoBehaviour
             return;
         }
         Instance = this;
+    }
+
+    public void OnBattleSceneStart()
+    {
         UIOverlayCamera = GameObject.FindGameObjectWithTag("UIOverlayCamera").GetComponent<Camera>();
     }
 

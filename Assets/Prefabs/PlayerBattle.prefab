@@ -500,6 +500,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70ecb096603ac90429cc18d52efd3d5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animate: {fileID: 0}
+  attackClip: {fileID: 0}
+  lookCursor: {fileID: 0}
+  attackHitbox: {fileID: 0}
   inputMovement: 1
   maxSpeed: 7
   acceleration: 28
@@ -621,9 +625,9 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -235
       objectReference: {fileID: 0}
-    - target: {fileID: 5226590579621598884, guid: 2f4dc89de1e9cdb4d996b2ef3feaa9a3, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 100
+    - target: {fileID: 4525750792994717697, guid: 2f4dc89de1e9cdb4d996b2ef3feaa9a3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6962430830994974729, guid: 2f4dc89de1e9cdb4d996b2ef3feaa9a3, type: 3}
       propertyPath: m_Value
@@ -635,11 +639,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8166331299644902380, guid: 2f4dc89de1e9cdb4d996b2ef3feaa9a3, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8166331299644902380, guid: 2f4dc89de1e9cdb4d996b2ef3feaa9a3, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8166331299644902380, guid: 2f4dc89de1e9cdb4d996b2ef3feaa9a3, type: 3}
       propertyPath: m_AnchorMin.y

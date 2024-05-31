@@ -18,4 +18,20 @@ public class UIStatsBar : MonoBehaviour
         HPText.text = currentHP + "/" + maxHP;
         MPText.text = currentMP + "/" + maxMP;
     }
+    private void Start()
+    {
+        GameManager.Instance.SceneLoader.onSceneLoad += OnSceneLoad;
+    }
+
+    private void OnDisable()
+    {
+        GameManager.Instance.SceneLoader.onSceneLoad -= OnSceneLoad;
+    }
+
+    public void OnSceneLoad()
+    {
+        Destroy(gameObject);
+    }
+
+
 }

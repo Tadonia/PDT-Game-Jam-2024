@@ -107,10 +107,7 @@ public class ActionSelector : MonoBehaviour
             }
             else
             {
-                float damage = playerCommander.actorStats.strength * 2f;
-                enemyTargets[selectedTarget].DamageHealth(damage);
-                BattleElementManager.Instance.AddDamageText(damage, enemyTargets[selectedTarget].transform.position + Vector3.up);
-                playerCommander.OnTurnEnd();
+                StartCoroutine(BasicAttack());
             }
 
             if (targetingAll)
@@ -167,6 +164,7 @@ public class ActionSelector : MonoBehaviour
         BattleActor[] actors = FindObjectsOfType<BattleActor>();
         enemyTargets = (from a in actors orderby a.transform.position.y descending where a.allegiance is ActorAllegiance.Enemy select a).ToArray<BattleActor>();
         Debug.Log("Targets: " + enemyTargets.Length);
+        if (enemyTargets.Length == 0) GameManager.Instance.SceneLoader.SetScene(1);
     }
 
     public void DoCommand(ActionObject minigame, ActionListButton selectedButton)
@@ -192,6 +190,15 @@ public class ActionSelector : MonoBehaviour
                 cursorClones.Add(cursorClone);
             }
         }
+    }
+
+    IEnumerator BasicAttack()
+    {
+        float damage = playerCommander.actorStats.strength * 2f;
+        enemyTargets[selectedTarget].DamageHealth(damage);
+        BattleElementManager.Instance.AddDamageText(damage, enemyTargets[selectedTarget].transform.position + Vector3.up);
+        yield return new WaitForSeconds(1);
+        playerCommander.OnTurnEnd();
     }
 
     #region Buttons

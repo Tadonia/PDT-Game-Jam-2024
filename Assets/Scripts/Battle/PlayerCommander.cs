@@ -19,7 +19,7 @@ public class PlayerCommander : BattleActor
     protected override void Awake()
     {
         base.Awake();
-        if (Instance != null)
+        if (Instance != null && Instance.gameObject)
         {
             Destroy(gameObject);
             return;
@@ -35,6 +35,7 @@ public class PlayerCommander : BattleActor
 
         // TODO: REMOVE
         SetStats(actorStats, actorStats.vitality * 5f + 25f, actorStats.spirit * 5f);
+        actionSelector.gameObject.SetActive(true);
     }
 
     public override void OnTurnStart()

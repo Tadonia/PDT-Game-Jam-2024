@@ -15,7 +15,7 @@ public class TurnManager : MonoBehaviour
     public delegate void OnNextTurn(BattleActor actor);
     public OnNextTurn onNextTurn;
 
-    BattleActor[] battleActors;
+    List<BattleActor> battleActors;
     List<BattleActor> turnOrder;
     int turnCount;
 
@@ -41,7 +41,7 @@ public class TurnManager : MonoBehaviour
 
     public void StartBattle()
     {
-        battleActors = FindObjectsByType<BattleActor>(FindObjectsInactive.Exclude, FindObjectsSortMode.None);
+        battleActors = new List<BattleActor>(FindObjectsByType<BattleActor>(FindObjectsInactive.Exclude, FindObjectsSortMode.None));
         turnOrder = new List<BattleActor>(battleActors);
         turnOrder.Sort();
         turnOrder.Reverse();
@@ -65,7 +65,19 @@ public class TurnManager : MonoBehaviour
     {
         turnCount++;
         int index = turnCount % turnOrder.Count;
+        if (turnOrder[index] == null)
+        {
+            turnOrder.RemoveAt(index);
+            if (index > turnOrder.Count - 1)
+                index = 0;
+        }
         turnOrder[index].OnTurnStart();
         onNextTurn?.Invoke(turnOrder[index]);
+    }
+
+    public void RemoveActor(BattleActor actor)
+    {
+        battleActors.Remove(actor);
+        turnOrder.Remove(actor);
     }
 }

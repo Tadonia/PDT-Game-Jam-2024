@@ -106,10 +106,7 @@ public class ActionSelector : MonoBehaviour
             }
             else
             {
-                float damage = playerCommander.actorStats.strength * 2f;
-                enemyTargets[selectedTarget].DamageHealth(damage);
-                BattleElementManager.Instance.AddDamageText(damage, enemyTargets[selectedTarget].transform.position + Vector3.up);
-                playerCommander.OnTurnEnd();
+                StartCoroutine(BasicAttack());
             }
 
             if (targetingAll)
@@ -190,6 +187,15 @@ public class ActionSelector : MonoBehaviour
                 cursorClones.Add(cursorClone);
             }
         }
+    }
+
+    IEnumerator BasicAttack()
+    {
+        float damage = playerCommander.actorStats.strength * 2f;
+        enemyTargets[selectedTarget].DamageHealth(damage);
+        BattleElementManager.Instance.AddDamageText(damage, enemyTargets[selectedTarget].transform.position + Vector3.up);
+        yield return new WaitForSeconds(1);
+        playerCommander.OnTurnEnd();
     }
 
     #region Buttons

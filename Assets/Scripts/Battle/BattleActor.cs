@@ -37,6 +37,12 @@ public abstract class BattleActor : MonoBehaviour, IComparable<BattleActor>
         }
     }
 
+    protected virtual void OnDestroy()
+    {
+        StopAllCoroutines();
+        Destroy(statsBar.gameObject);
+    }
+
     protected virtual void OnBattleStart()
     {
         statsBar = Instantiate(statsBarPrefab, UIOverlayManager.Instance.GetCanvas().transform).GetComponent<UIStatsBar>();
@@ -65,28 +71,38 @@ public abstract class BattleActor : MonoBehaviour, IComparable<BattleActor>
         statsBar.UpdateStatsBar(currentHP, currentMP, maxHP, maxMP);
     }
 
-    public void DamageHealth(float damage)
+    public virtual void DamageHealth(float damage)
     {
         currentHP = Mathf.Max(currentHP - damage, 0);
         statsBar.UpdateStatsBar(currentHP, currentMP, maxHP, maxMP);
+        if (currentHP <= 0)
+        {
+            OnDeath();
+        }
     }
 
-    public void HealHealth(float heal)
+    public virtual void HealHealth(float heal)
     {
         currentHP = Mathf.Min(currentHP + heal, maxMP);
         statsBar.UpdateStatsBar(currentHP, currentMP, maxHP, maxMP);
     }
 
-    public void ReduceMP(float MPAmount)
+    public virtual void ReduceMP(float MPAmount)
     {
         currentMP -= MPAmount;
         statsBar.UpdateStatsBar(currentHP, currentMP, maxHP, maxMP);
     }
 
-    public void RecoverMP(float MPAmount)
+    public virtual void RecoverMP(float MPAmount)
     {
         currentMP += MPAmount;
         statsBar.UpdateStatsBar(currentHP, currentMP, maxHP, maxMP);
+    }
+
+    protected virtual void OnDeath()
+    {
+        TurnManager.Instance.RemoveActor(this);
+        Destroy(gameObject);
     }
 
     public int CompareTo(BattleActor other)

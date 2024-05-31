@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36a020ac59ddc7d4c9baf582f484cfa8, type: 3}
   m_Name: Fire Spear
   m_EditorClassIdentifier: 
-  actionName: Fire Spear
+  actionName: Water Spear
   icon: {fileID: 0}
   attackMinigame: {fileID: 541104432624441142, guid: 6991424518ca72745a1f1209b8cac3a6, type: 3}
   targetSelection: 0

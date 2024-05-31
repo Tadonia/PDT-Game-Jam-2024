@@ -66,8 +66,11 @@ MonoBehaviour:
   listCursor: {fileID: 6148999695309467731}
   enemyCursor: {fileID: 4547985219561572335}
   listWindow: {fileID: 3722723892315485115}
-  listWindowRevealTime: 0.25
+  listWindowRevealTime: 0
   listWindowTargetPostion: {x: 515, y: 0, z: 0}
+  navigateSound: {fileID: 11400000, guid: 58099ff530d7a354db4cda878da691b9, type: 2}
+  confirmSound: {fileID: 11400000, guid: 9e0fda171b5a18646b866bef60bc5629, type: 2}
+  cancelSound: {fileID: 11400000, guid: 12cca6c1b3cebfb4cb978350074d4116, type: 2}
 --- !u!1 &186749863059454894
 GameObject:
   m_ObjectHideFlags: 0

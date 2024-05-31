@@ -11,6 +11,10 @@ public abstract class BattleActor : MonoBehaviour, IComparable<BattleActor>
     public GameObject statsBarPrefab;
     public bool debugMessages = true;
 
+    [Header("Audio Objects")]
+    public AudioObject attackSound;
+    public AudioObject damageTakenSound;
+
     protected float maxHP;
     protected float currentHP;
     protected float maxMP;
@@ -81,6 +85,8 @@ public abstract class BattleActor : MonoBehaviour, IComparable<BattleActor>
     {
         currentHP = Mathf.Max(currentHP - damage, 0);
         statsBar.UpdateStatsBar(currentHP, currentMP, maxHP, maxMP);
+        if (damage > 0 && damageTakenSound)
+            damageTakenSound.PlayAudio(transform.position);
         if (currentHP <= 0)
         {
             OnDeath();

@@ -261,3 +261,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   background: {fileID: 6032600706492003803}
   turnText: {fileID: 1196640128364799987}
+  turnSound: {fileID: 11400000, guid: 3c17b10d9a27c3f46b9f89fec3590f4f, type: 2}

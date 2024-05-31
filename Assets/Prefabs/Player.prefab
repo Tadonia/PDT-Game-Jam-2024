@@ -55,6 +55,7 @@ MonoBehaviour:
   lookCursor: {fileID: 3074409249124948900}
   attackHitbox: {fileID: 1939174203770976490}
   inputMovement: 1
+  grassSoundObject: {fileID: 11400000, guid: 80795883de6283b4485809587060b9f8, type: 2}
   maxSpeed: 7
   acceleration: 28
 --- !u!143 &2120772596138317517

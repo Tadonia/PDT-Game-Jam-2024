@@ -25,6 +25,11 @@ public class ActionSelector : MonoBehaviour
     [SerializeField] float listWindowRevealTime;
     [SerializeField] Vector3 listWindowTargetPostion;
 
+    [Header("Sounds")]
+    [SerializeField] AudioObject navigateSound;
+    [SerializeField] AudioObject confirmSound;
+    [SerializeField] AudioObject cancelSound;
+
     ActionList actionList;
     PlayerCommander playerCommander;
     bool isListRevealed;
@@ -91,6 +96,11 @@ public class ActionSelector : MonoBehaviour
         {
             HideList();
         }
+
+        if (!targetingAll)
+        {
+            navigateSound.PlayAudio(Vector3.zero);
+        }
     }
 
     private void OnSubmitInput()
@@ -119,6 +129,7 @@ public class ActionSelector : MonoBehaviour
                 }
                 cursorClones.Clear();
             }
+            confirmSound.PlayAudio(Vector3.zero);
         }
     }
 
@@ -148,6 +159,7 @@ public class ActionSelector : MonoBehaviour
                 }
                 cursorClones.Clear();
             }
+            cancelSound.PlayAudio(Vector3.zero);
         }
     }
     #endregion
@@ -197,6 +209,7 @@ public class ActionSelector : MonoBehaviour
         float damage = playerCommander.actorStats.strength * 2f;
         enemyTargets[selectedTarget].DamageHealth(damage);
         BattleElementManager.Instance.AddDamageText(damage, enemyTargets[selectedTarget].transform.position + Vector3.up);
+        playerCommander.attackSound?.PlayAudio(transform.position);
         yield return new WaitForSeconds(1);
         playerCommander.OnTurnEnd();
     }
@@ -209,6 +222,7 @@ public class ActionSelector : MonoBehaviour
         selectedTarget = 0;
         enemyCursor.gameObject.SetActive(true);
         UIOverlayManager.Instance.SetUIElementPosition(enemyCursor, enemyTargets[selectedTarget].transform.position + new Vector3(0f, 2.5f, 0.33f));
+        confirmSound.PlayAudio(Vector3.zero);
     }
 
     public void SkillsButton()
@@ -222,6 +236,7 @@ public class ActionSelector : MonoBehaviour
         }
         else
             HideList();
+        confirmSound.PlayAudio(Vector3.zero);
     }
 
     public void ItemsButton()
@@ -235,11 +250,13 @@ public class ActionSelector : MonoBehaviour
         }
         else
             HideList();
+        confirmSound.PlayAudio(Vector3.zero);
     }
 
     public void RunButton()
     {
         playerCommander.OnTurnEnd();
+        confirmSound.PlayAudio(Vector3.zero);
     }
     #endregion
 

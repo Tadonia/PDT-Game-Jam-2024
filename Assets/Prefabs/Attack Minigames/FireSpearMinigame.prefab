@@ -51,6 +51,7 @@ MonoBehaviour:
   speed: 1050
   furthestDistance: 150
   damagePerStr: 5
+  waterSound: {fileID: 11400000, guid: 4c03074e3a84a22469e4fa2fc4283bad, type: 2}
 --- !u!1 &1420295130161683605
 GameObject:
   m_ObjectHideFlags: 0

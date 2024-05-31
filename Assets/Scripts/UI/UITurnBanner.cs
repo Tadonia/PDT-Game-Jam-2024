@@ -8,6 +8,7 @@ public class UITurnBanner : MonoBehaviour
 {
     [SerializeField] Image background;
     [SerializeField] TMP_Text turnText;
+    [SerializeField] AudioObject turnSound;
 
     public void Start()
     {
@@ -38,5 +39,6 @@ public class UITurnBanner : MonoBehaviour
             ActorAllegiance.Enemy => new Color(0.75f, 0f, 0f, 0.5f),
             _ => new Color(0f, 0f, 0f, 0.5f),
         };
+        turnSound.PlayAudio(Vector3.zero);
     }
 }

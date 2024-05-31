@@ -197,6 +197,7 @@ public class ActionSelector : MonoBehaviour
         float damage = playerCommander.actorStats.strength * 2f;
         enemyTargets[selectedTarget].DamageHealth(damage);
         BattleElementManager.Instance.AddDamageText(damage, enemyTargets[selectedTarget].transform.position + Vector3.up);
+        playerCommander.attackSound?.PlayAudio(transform.position);
         yield return new WaitForSeconds(1);
         playerCommander.OnTurnEnd();
     }

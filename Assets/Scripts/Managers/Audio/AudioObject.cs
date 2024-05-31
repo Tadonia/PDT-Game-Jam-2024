@@ -8,8 +8,8 @@ public class AudioObject : ScriptableObject
     public AudioClip[] audioClips;
     public float volume;
 
-    public void PlayAudio(Vector3 position)
+    public AudioInstance PlayAudio(Vector3 position)
     {
-        GameManager.Instance.AudioManager.PlayAudio(this, position);
+        return GameManager.Instance.AudioManager.PlayAudio(this, position);
     }
 }

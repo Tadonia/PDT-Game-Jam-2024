@@ -5152,6 +5152,8 @@ MonoBehaviour:
   timerText: {fileID: 8460057490542547388}
   ps: {fileID: 8588512423081779690}
   minigameDuration: 3
+  fireSound: {fileID: 11400000, guid: f9ab89bcc9e5b64449ee94435783f06b, type: 2}
+  chargeSound: {fileID: 11400000, guid: ba8fa0340d538de418c158c8ce22d3a9, type: 2}
 --- !u!1 &7288564461462962166
 GameObject:
   m_ObjectHideFlags: 0

@@ -153,6 +153,8 @@ MonoBehaviour:
   allegiance: 2
   statsBarPrefab: {fileID: 5967871131720504777, guid: caedb4f398faaf2479abb752d2d358fb, type: 3}
   debugMessages: 1
+  attackSound: {fileID: 11400000, guid: 6f6f1f36783abe54e97a5ac1e2b68c96, type: 2}
+  damageTakenSound: {fileID: 11400000, guid: b49141e3687fdec4aa329011e4b74ffb, type: 2}
   spriteTransform: {fileID: 4716129300258107278}
   action: {fileID: 11400000, guid: ec1a30a25406b5248b7a47f642376a92, type: 2}
 --- !u!1 &7193566745815359668

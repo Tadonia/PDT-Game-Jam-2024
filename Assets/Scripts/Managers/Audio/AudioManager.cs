@@ -13,7 +13,7 @@ public class AudioManager : MonoBehaviour
     {
         for (int i = 0; i < numOfInstances; i++)
         {
-            AudioInstance instance = Instantiate(audioInstancePrefab).GetComponent<AudioInstance>();
+            AudioInstance instance = Instantiate(audioInstancePrefab, transform).GetComponent<AudioInstance>();
             audioInstances.Enqueue(instance);
         }
     }

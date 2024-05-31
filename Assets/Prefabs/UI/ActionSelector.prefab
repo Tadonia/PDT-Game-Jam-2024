@@ -66,7 +66,7 @@ MonoBehaviour:
   listCursor: {fileID: 6148999695309467731}
   enemyCursor: {fileID: 4547985219561572335}
   listWindow: {fileID: 3722723892315485115}
-  listWindowRevealTime: 0.25
+  listWindowRevealTime: 0
   listWindowTargetPostion: {x: 515, y: 0, z: 0}
 --- !u!1 &186749863059454894
 GameObject:

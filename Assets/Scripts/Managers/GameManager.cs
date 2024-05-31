@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     public UIOverlayManager UIOverlayManager { get; private set; }
     public BattleElementManager BattleElementManager { get; private set; }
     public AudioManager AudioManager { get; private set; }
+    public MusicManager MusicManager { get; private set; }
 
     private void Awake()
     {
@@ -25,6 +26,7 @@ public class GameManager : MonoBehaviour
         UIOverlayManager = GetComponentInChildren<UIOverlayManager>();
         BattleElementManager = GetComponentInChildren<BattleElementManager>();
         AudioManager = GetComponentInChildren<AudioManager>();
+        MusicManager = GetComponentInChildren<MusicManager>();
     }
 
     public void BattleStart()

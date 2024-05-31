@@ -41,8 +41,9 @@ public class PlayerCommander : BattleActor
     public override void OnTurnStart()
     {
         base.OnTurnStart();
-        actionSelector.OnTurnStart(this);
         actionSelector.gameObject.SetActive(true);
+        actionSelector.OnTurnStart(this);
+        CameraPositionSwitcher.Instance.MoveToPosAndRot(new Vector3(0, 2.5f, -10f), Quaternion.Euler(-10, 0, 0), 0.25f);
     }
 
     public override void OnTurnEnd()

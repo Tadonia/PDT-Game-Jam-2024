@@ -195,17 +195,17 @@ MonoBehaviour:
   m_MoveRepeatDelay: 0.5
   m_MoveRepeatRate: 0.1
   m_XRTrackingOrigin: {fileID: 0}
-  m_ActionsAsset: {fileID: -944628639613478452, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_PointAction: {fileID: -1654692200621890270, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_MoveAction: {fileID: -8784545083839296357, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_SubmitAction: {fileID: 392368643174621059, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_CancelAction: {fileID: 7727032971491509709, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_LeftClickAction: {fileID: 3001919216989983466, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_MiddleClickAction: {fileID: -2185481485913320682, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_RightClickAction: {fileID: -4090225696740746782, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_ScrollWheelAction: {fileID: 6240969308177333660, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_TrackedDevicePositionAction: {fileID: 6564999863303420839, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_TrackedDeviceOrientationAction: {fileID: 7970375526676320489, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_ActionsAsset: {fileID: -944628639613478452, guid: 3f6addbed12155a4083dafd7d37d6bee, type: 3}
+  m_PointAction: {fileID: -5055394435746671265, guid: 3f6addbed12155a4083dafd7d37d6bee, type: 3}
+  m_MoveAction: {fileID: -1845154823633300206, guid: 3f6addbed12155a4083dafd7d37d6bee, type: 3}
+  m_SubmitAction: {fileID: -5025940839340863969, guid: 3f6addbed12155a4083dafd7d37d6bee, type: 3}
+  m_CancelAction: {fileID: 9061057490249454161, guid: 3f6addbed12155a4083dafd7d37d6bee, type: 3}
+  m_LeftClickAction: {fileID: -9181463535884148438, guid: 3f6addbed12155a4083dafd7d37d6bee, type: 3}
+  m_MiddleClickAction: {fileID: 5065536651080429560, guid: 3f6addbed12155a4083dafd7d37d6bee, type: 3}
+  m_RightClickAction: {fileID: -4134456074053063023, guid: 3f6addbed12155a4083dafd7d37d6bee, type: 3}
+  m_ScrollWheelAction: {fileID: 7183480596555947743, guid: 3f6addbed12155a4083dafd7d37d6bee, type: 3}
+  m_TrackedDevicePositionAction: {fileID: 3884836981234465222, guid: 3f6addbed12155a4083dafd7d37d6bee, type: 3}
+  m_TrackedDeviceOrientationAction: {fileID: -7616195876150577494, guid: 3f6addbed12155a4083dafd7d37d6bee, type: 3}
   m_DeselectOnBackgroundClick: 0
   m_PointerBehavior: 0
   m_CursorLockBehavior: 0
@@ -483,6 +483,7 @@ MonoBehaviour:
     resistance: 10
   allegiance: 1
   statsBarPrefab: {fileID: 5967871131720504777, guid: caedb4f398faaf2479abb752d2d358fb, type: 3}
+  statsBarOffset: {x: 0, y: 2.75, z: 0}
   debugMessages: 1
   attackSound: {fileID: 11400000, guid: 6f6f1f36783abe54e97a5ac1e2b68c96, type: 2}
   damageTakenSound: {fileID: 11400000, guid: b49141e3687fdec4aa329011e4b74ffb, type: 2}
@@ -624,32 +625,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1744753667096921382, guid: 2f4dc89de1e9cdb4d996b2ef3feaa9a3, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -235
-      objectReference: {fileID: 0}
     - target: {fileID: 4525750792994717697, guid: 2f4dc89de1e9cdb4d996b2ef3feaa9a3, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6962430830994974729, guid: 2f4dc89de1e9cdb4d996b2ef3feaa9a3, type: 3}
       propertyPath: m_Value
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8029660733867741935, guid: 2f4dc89de1e9cdb4d996b2ef3feaa9a3, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 8166331299644902380, guid: 2f4dc89de1e9cdb4d996b2ef3feaa9a3, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8166331299644902380, guid: 2f4dc89de1e9cdb4d996b2ef3feaa9a3, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8166331299644902380, guid: 2f4dc89de1e9cdb4d996b2ef3feaa9a3, type: 3}
-      propertyPath: m_AnchorMin.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8487658975916762386, guid: 2f4dc89de1e9cdb4d996b2ef3feaa9a3, type: 3}

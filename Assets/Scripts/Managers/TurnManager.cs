@@ -18,6 +18,7 @@ public class TurnManager : MonoBehaviour
     List<BattleActor> battleActors;
     List<BattleActor> turnOrder;
     int turnCount;
+    int orderIndex;
 
     private void Awake()
     {
@@ -51,6 +52,7 @@ public class TurnManager : MonoBehaviour
         }*/
         turnOrder[0].OnTurnStart();
         turnCount = 0;
+        orderIndex = 0;
         onBattleStart?.Invoke();
         onNextTurn?.Invoke(turnOrder[0]);
     }
@@ -64,20 +66,26 @@ public class TurnManager : MonoBehaviour
     public void NextTurn()
     {
         turnCount++;
-        int index = turnCount % turnOrder.Count;
-        if (turnOrder[index] == null)
+        orderIndex++;
+        if (orderIndex >= turnOrder.Count)
+            orderIndex = 0;
+        BattleActor actor = turnOrder[orderIndex];
+        while (actor == null)
         {
-            turnOrder.RemoveAt(index);
-            if (index > turnOrder.Count - 1)
-                index = 0;
+            Debug.Log("Dead actor");
+            turnOrder.RemoveAt(orderIndex);
+            if (orderIndex >= turnOrder.Count)
+                orderIndex = 0;
+            actor = turnOrder[orderIndex];
         }
-        turnOrder[index].OnTurnStart();
-        onNextTurn?.Invoke(turnOrder[index]);
+        Debug.Log("Actor " + orderIndex + "'s Turn. Turn " + turnCount + ". Actors left: " + turnOrder.Count);
+        actor.OnTurnStart();
+        onNextTurn?.Invoke(actor);
     }
 
     public void RemoveActor(BattleActor actor)
     {
         battleActors.Remove(actor);
-        turnOrder.Remove(actor);
+        //turnOrder.Remove(actor);
     }
 }

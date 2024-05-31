@@ -85,7 +85,9 @@ public class ActionSelector : MonoBehaviour
     {
         if (selectingEnemies && !targetingAll)
         {
-            selectedTarget += (int)input.y;
+            int dir = (int)input.y;
+            if (input.y == 0) dir = (int)input.x;
+            selectedTarget += dir;
             if (selectedTarget > enemyTargets.Length - 1)
                 selectedTarget = 0;
             else if (selectedTarget < 0)
@@ -114,6 +116,7 @@ public class ActionSelector : MonoBehaviour
             if (isListRevealed)
             {
                 playerCommander.DoCommand(currentMinigame, targets);
+                isListRevealed = false;
             }
             else
             {

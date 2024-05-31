@@ -31,6 +31,7 @@ public class EnemyActor : BattleActor
     public override void OnTurnStart()
     {
         base.OnTurnStart();
+        CameraPositionSwitcher.Instance.MoveToPosAndRot(new Vector3(0, 7.5f, -10f), Quaternion.Euler(22.5f, 0, 0), 0.25f);
         if (action == null)
         {
             StartCoroutine(Jump());
